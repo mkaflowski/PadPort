@@ -82,26 +82,6 @@ see-through with the transparency slider.
 mode to **Keyboard** and the controller will press keys instead (you can change
 which key each button presses).
 
-## While playing
-
-- The game fills the screen and keeps its shape (black bars at the sides when
-  the screen is wider than the game).
-- The small menu button hides after 5 seconds. Touch the screen or press the
-  Android Back button to bring it back.
-- From that menu you can **Export saved games**, **Import save backup**, show
-  the on-screen controller, turn the second screen on or off, copy a diagnostic
-  log, or go **Back to library**.
-
-## Saves
-
-Save the normal way inside the game. Saves are kept inside PadPort, separately
-for each game.
-
-**Uninstalling PadPort or clearing its data deletes your saves.** Export them
-first with **Export saved games** in the menu while playing. Exporting saves
-what the game has already saved - it does not create a new save of where you
-are right now.
-
 ## Two screens
 
 > **Experimental.** The two-screen mode is new. It may be unstable, and it can
@@ -125,6 +105,26 @@ playing. Battle commands and the game's own menus stay on the main screen.
 
 Want this for another game? See
 [Want a game supported, or a two-screen mode for it?](#want-a-game-supported-or-a-two-screen-mode-for-it)
+
+## While playing
+
+- The game fills the screen and keeps its shape (black bars at the sides when
+  the screen is wider than the game).
+- The small menu button hides after 5 seconds. Touch the screen or press the
+  Android Back button to bring it back.
+- From that menu you can **Export saved games**, **Import save backup**, show
+  the on-screen controller, turn the second screen on or off, copy a diagnostic
+  log, or go **Back to library**.
+
+## Saves
+
+Save the normal way inside the game. Saves are kept inside PadPort, separately
+for each game.
+
+**Uninstalling PadPort or clearing its data deletes your saves.** Export them
+first with **Export saved games** in the menu while playing. Exporting saves
+what the game has already saved - it does not create a new save of where you
+are right now.
 
 ## Why GeckoView?
 
