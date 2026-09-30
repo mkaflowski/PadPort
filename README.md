@@ -1,5 +1,7 @@
 # PadPort
 
+[![Downloads](https://img.shields.io/github/downloads/mkaflowski/PadPort/total?style=for-the-badge&logo=github&label=Downloads&labelColor=1a1819&color=d16197)](https://github.com/mkaflowski/PadPort/releases)
+
 Play your **RPG Maker** games on Android with a controller.
 
 Copy the game folder from your PC to your phone, tablet or handheld, add it in
@@ -30,9 +32,7 @@ your game files.
 
 - Android 8.0 or newer.
 - A 64-bit ARM device (almost every phone and handheld from the last few
-  years) for GeckoView and for XP / VX / VX Ace games. On older 32-bit devices
-  MV / MZ games run in the Android System WebView - keep it up to date in
-  Google Play.
+  years). The downloadable APK includes ARM64 native engines.
 - Your own copy of the game. PadPort does not include any games.
 
 ## Getting started

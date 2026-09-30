@@ -1,13 +1,13 @@
-PADPORT 0.5 — RPG MAKER MV/MZ NA ANDROIDZIE
+PADPORT 0.5.0 PREVIEW — RPG MAKER NA ANDROIDZIE
 
 1. Zainstaluj PadPort-0.5-debug.apk na telefonie, tablecie lub handheldzie.
-   Wymagany Android 8.0+. Na urządzeniach 32-bitowych także aktualny
-   Android System WebView (patrz SILNIK GRY).
+   Wymagany Android 8.0+ i urządzenie ARM64. Ten APK zawiera silniki 64-bitowe.
 2. Skopiuj CAŁY oryginalny folder gry na urządzenie, np. do
    Download/Gry/Look Outside. Archiwum gry najpierw rozpakuj.
 3. Język aplikacji jest dobierany automatycznie z ustawień Androida.
    W PadPort wybierz „Dodaj folder gry”. Wskaż folder zawierający index.html
-   albo nadrzędny folder z podfolderem www. Zatwierdź dostęp do tego folderu.
+   albo nadrzędny folder z podfolderem www. Dla XP/VX/VX Ace wskaż folder
+   z plikiem Game.ini / <nazwa gry>.ini i danymi gry. Zatwierdź dostęp do folderu.
 4. Wybierz „Graj”. Pliki gry są tylko odczytywane — nie wymagają portowania
    ani przerabiania na wersję androidową. EXE/DLL pozostają nieużywane.
 
@@ -71,7 +71,7 @@ Przypisanie akcji w grze zależy też od samej gry. Typowy RPG Maker używa
 A/krzyżyka do potwierdzania, B/kółka do cofania, Y/trójkąta do menu,
 L1/R1 do zmiany stron. Gry z własnym menu gamepada mogą zmienić ten układ.
 
-LOOK OUTSIDE — DWA EKRANY (NOWY KOD, JESZCZE BEZ NOWEGO APK)
+LOOK OUTSIDE — DWA EKRANY (EKSPERYMENTALNE)
 
 W menu ⋮ na karcie gry lub podczas grania zaznacz
 „Look Outside — interfejs dwuekranowy”. Przy pierwszym dodawaniu Look Outside
@@ -89,7 +89,7 @@ akcje walki wybierasz na głównym ekranie. Zmiana wyposażenia pozostaje w grze
 Po wyłączeniu funkcji lub odłączeniu ekranu wraca zwykły interfejs.
 Obsługa dotyku i układ na fizycznym Thorze wymagają jeszcze sprawdzenia.
 
-TO THE MOON — DWA EKRANY (NOWY KOD, JESZCZE BEZ NOWEGO APK)
+TO THE MOON — DWA EKRANY (EKSPERYMENTALNE)
 
 Na karcie gry lub w menu podczas grania zaznacz
 „To the Moon — interfejs dwuekranowy”. Przy dodawaniu gry z drugim ekranem
@@ -127,7 +127,7 @@ Aby dana gra używała Android System WebView, odznacz w jej menu ⋮
 Każdy silnik ma własne zapisy: po zmianie gra nie widzi zapisów z drugiego
 silnika (nie są usuwane - po powrocie znów są widoczne). Zapisy przeniesiesz
 eksportem w jednym silniku i importem w drugim.
-Na urządzeniach bez 64-bitowego ARM gry MV/MZ zawsze używają WebView.
+Publikowany APK wymaga urządzenia ARM64 również przy wyborze WebView.
 
 JĘZYK APLIKACJI
 
@@ -137,16 +137,15 @@ Nie ma przełącznika języka w aplikacji. Tester kontrolera używa tego samego
 języka co pozostały interfejs. Ta obsługa nie tłumaczy tekstów samej gry.
 APK instaluje się jako aktualizacja wcześniejszego PadPort/RPGMPadPort.
 
-STATUS WERSJI 0.5
+STATUS WERSJI 0.5.0 PREVIEW (BUILD 7)
 
-To wersja testowa, przeznaczona dla RPG Makera MV/MZ.
-Sprawdzono na emulatorze Androida 15: wybór folderu, start Look Outside,
-rozpoczęcie nowej gry z pada, odczyt/zapis danych oraz wejście HID USB/Bluetooth
-i mapowanie klawiaturowe. Nie przeprowadzono testu na fizycznym AYN Thorze.
-W dotychczasowym APK 0.5 nie ma jeszcze opisanego wyżej panelu dwuekranowego.
+To wersja testowa z obsługą MV/MZ oraz eksperymentalną obsługą XP/VX/VX Ace
+i paneli dwuekranowych. Build 7 został zainstalowany na AYN Thorze.
+Zgodność poszczególnych gier i funkcji wymaga dalszych testów.
 
 Gry korzystające z dodatkowych natywnych modułów Node/NW.js mogą wymagać
-osobnej adaptacji w launcherze. XP/VX/VX Ace nie należą do obsługi tej wersji.
+osobnej adaptacji w launcherze. Gry XP/VX/VX Ace wymagające RTP mogą mieć
+brakujące grafiki lub dźwięki; MIDI i filmy nie są obecnie obsługiwane.
 
 Jeżeli gra nie startuje: menu ⋮ → Diagnostyka / kopiuj log.
 Przy zgłoszeniu problemu z padem podaj model urządzenia, nazwę kontrolera
