@@ -1,5 +1,7 @@
 # PadPort
 
+![PadPort — Play your RPG Maker games on Android.](docs/banner.jpg)
+
 [![Downloads](https://img.shields.io/github/downloads/mkaflowski/PadPort/total?style=for-the-badge&logo=github&label=Downloads&labelColor=1a1819&color=d16197)](https://github.com/mkaflowski/PadPort/releases)
 
 Play your **RPG Maker** games on Android with a controller.
