@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box}html{background:#000}body{margin:0;padding:12px;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;background:#000;color:#eee4cf;font:16px sans-serif;touch-action:manipulation}
+main{width:100%;max-width:640px;flex:0 0 auto;margin:auto 0}h1{text-align:center}nav,#actions{justify-content:center}
+#gameLogo{max-width:80%;max-height:110px;width:auto;height:auto;vertical-align:middle;opacity:.5}
+body{font-family:var(--game-font,sans-serif)}
+h1{font:bold 19px monospace;margin:0 0 10px}h2{font-size:17px;margin:8px 0}button{font:inherit;color:inherit;background:#272221;border:1px solid #847969;border-radius:4px;padding:12px;min-height:44px}button:disabled{opacity:.45}button.selected,.actor.selected{border-color:#efc36c;background:#3e3324}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.party{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.actor{flex:0 1 calc(50% - 4px);min-width:0;overflow-wrap:anywhere;padding:8px;border:1px solid #847969;background:#211d1c;font-size:13px;text-align:left}.face{width:64px;height:64px;float:left;margin-right:8px;image-rendering:pixelated}.name{font-weight:bold;font-size:15px}.gear{clear:both;padding-top:6px;color:#c5b9a5;font-size:12px}.icon{width:24px;height:24px;image-rendering:pixelated;vertical-align:middle;margin-right:5px}progress{width:100%;height:9px;accent-color:#b35342}.mp{accent-color:#759574}.rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.item{text-align:left;padding:8px;font-size:14px}.count{float:right;color:#efc36c}.description{white-space:pre-wrap;margin:10px 0;padding:10px;border-left:2px solid #847969;min-height:36px}#actions{position:sticky;bottom:0;background:#000;padding:6px 0;display:flex;gap:6px}
+h1{font-family:var(--game-font,monospace)}
+#actions .inventory-open{appearance:none;-webkit-appearance:none}
+.face img{display:block;width:100%;height:100%;image-rendering:pixelated}.actor-target{cursor:pointer}.actor-unavailable{opacity:.45;cursor:default}
+.gear-item{display:inline-flex;align-items:center;gap:4px;max-width:100%;vertical-align:middle}.gear-item .icon{width:16px;height:16px;margin:0;flex-shrink:0}
+</style><script src="ui-strings.js"></script></head>
+<body><main><h1><img id="gameLogo" alt="Look Outside" decoding="async" referrerpolicy="no-referrer" hidden><span id="gameTitle">LOOK OUTSIDE</span></h1><div id="party" class="party"></div><nav id="nav"></nav><div id="items" class="rows"></div><div id="description" class="description" hidden></div><div id="actions"></div></main>
+<script src="look-outside-panel.js"></script></body></html>

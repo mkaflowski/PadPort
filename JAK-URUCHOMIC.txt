@@ -1,0 +1,153 @@
+PADPORT 0.5 — RPG MAKER MV/MZ NA ANDROIDZIE
+
+1. Zainstaluj PadPort-0.5-debug.apk na telefonie, tablecie lub handheldzie.
+   Wymagany Android 8.0+. Na urządzeniach 32-bitowych także aktualny
+   Android System WebView (patrz SILNIK GRY).
+2. Skopiuj CAŁY oryginalny folder gry na urządzenie, np. do
+   Download/Gry/Look Outside. Archiwum gry najpierw rozpakuj.
+3. Język aplikacji jest dobierany automatycznie z ustawień Androida.
+   W PadPort wybierz „Dodaj folder gry”. Wskaż folder zawierający index.html
+   albo nadrzędny folder z podfolderem www. Zatwierdź dostęp do tego folderu.
+4. Wybierz „Graj”. Pliki gry są tylko odczytywane — nie wymagają portowania
+   ani przerabiania na wersję androidową. EXE/DLL pozostają nieużywane.
+
+GRAFIKI GIER W BIBLIOTECE
+
+Tło karty jest pobierane automatycznie z ekranu tytułowego w folderze gry.
+Ma rozmycie (6 dp) i delikatne przyciemnienie; nazwa gry i przyciski pozostają ostre.
+Działa offline, także dla standardowych zaszyfrowanych obrazków MV/MZ.
+Gry bez takiego obrazka nadal mają normalną kartę i można je uruchomić.
+
+Przycisk ⋮ na karcie → „Grafika karty…” pozwala:
+• wskazać własny obraz PNG/JPG/WebP z urządzenia,
+• wrócić do grafiki z plików gry,
+• wyszukać okładkę w SteamGridDB lub na Steamie.
+
+Na SteamGridDB najlepiej szukać poziomych grafik „Hero”. Pobierz obraz
+w przeglądarce, wróć do PadPort i użyj „Wybierz obraz z urządzenia…”.
+Wybrany obraz jest kopiowany do danych PadPort. Folder gry pozostaje nietknięty.
+
+KONTROLERY
+
+„Tryb sterowania” pozwala wybrać:
+• Gamepad (klasyczny) — dotychczasową obsługę pada,
+• Klawiatura — przyciski kontrolera wysyłają przypisane klawisze.
+
+W trybie Klawiatura otwórz „Przypisania klawiszy…”. Wybierz przycisk pada,
+a następnie klawisz z listy lub użyj „Naciśnij klawisz…” z podłączoną klawiaturą.
+Możesz też wyłączyć dane przypisanie. Wybór trybu i układ są zapamiętywane.
+Domyślnie: krzyżak/lewa gałka = strzałki, A = Enter, B/Y/Start = Esc,
+X = Shift, L1/R1 = Q/W, L2/R2 = S/D, Select = Tab.
+Ustawienia dotyczą również pada ekranowego. Modyfikatory (Shift/Ctrl/Alt)
+można łączyć z innym klawiszem, przytrzymując dwa przyciski.
+
+Suwak „Przezroczystość kontrolera ekranowego” pozwala ustawić poziom 0–100%:
+0% to maksymalna widoczność, 100% to całkowita przezroczystość. Domyślnie jest
+50%. Ustawienie jest zapamiętywane i stosowane po powrocie do gry lub testera.
+
+W ustawieniach kontrolerów lub menu gry zaznacz „Pokaż kontroler ekranowy”,
+aby grać dotykiem. Pojawią się krzyżak, A/B/X/Y, L1/L2/R1/R2 oraz Start/Select.
+Możesz trzymać kilka przycisków jednocześnie i przesuwać palec po krzyżaku.
+Opcja jest zapamiętywana; domyślnie jest wyłączona. Fizyczny pad może działać
+równocześnie z ekranowym. Wirtualne przyciski pozostają widoczne podczas gry.
+
+• Bluetooth: sparuj pad w ustawieniach Androida. Aplikacja wykrywa podłączony pad.
+• USB: podłącz pad bezpośrednio lub przez przejściówkę OTG.
+• Wbudowany pad, np. AYN Thor: używaj standardowego trybu gamepada.
+  Mapper dotykowy uruchomiony w systemie może przechwytywać przyciski przed grą.
+
+„Kontrolery · mapowanie i test” pozwala sprawdzić przyciski, gałki i triggery,
+ustawić martwą strefę, zamienić przyciski i zapisać profil dla danego urządzenia.
+„Tester — co widzi gra?” pokazuje dokładnie Gamepad API używane przez grę.
+W trybie Gamepad licznik klawiatury pozostaje na 0. W trybie Klawiatura tester
+pokazuje przypisane klawisze i zwiększa licznik zdarzeń klawiatury.
+
+Jeżeli kontroler działa w trybie klawiaturowym HID:
+1. Wybierz jego urządzenie na liście.
+2. Przy każdej funkcji wybierz „Naucz” i naciśnij odpowiedni przycisk.
+3. Otwórz tester. Gra otrzyma przyciski gamepada zamiast klawiszy.
+
+Przypisanie akcji w grze zależy też od samej gry. Typowy RPG Maker używa
+A/krzyżyka do potwierdzania, B/kółka do cofania, Y/trójkąta do menu,
+L1/R1 do zmiany stron. Gry z własnym menu gamepada mogą zmienić ten układ.
+
+LOOK OUTSIDE — DWA EKRANY (NOWY KOD, JESZCZE BEZ NOWEGO APK)
+
+W menu ⋮ na karcie gry lub podczas grania zaznacz
+„Look Outside — interfejs dwuekranowy”. Przy pierwszym dodawaniu Look Outside
+na urządzeniu z dostępnym drugim ekranem aplikacja sama zapyta o aktywację.
+Ikona dwóch ekranów na karcie oznacza włączoną opcję. Ustawienie dotyczy tylko
+tej gry i jest zachowywane po odświeżeniu jej plików.
+
+Dolny ekran pokazuje drużynę, HP/staminę, statusy i wyposażenie. Przycisk
+ekwipunku na dolnym panelu otwiera tam listę przedmiotów: wybierz przedmiot,
+„Użyj”, a następnie cel. Ekwipunek wybrany w zwykłym menu gry otwiera się
+na głównym ekranie. Nazwa przycisku jest pobierana z gry (np. „Ekwipunek”
+ze spolszczenia); panel wczytuje również używany przez grę font z jej folderu.
+Obowiązują normalne ograniczenia gry. W walce na dole jest podgląd drużyny;
+akcje walki wybierasz na głównym ekranie. Zmiana wyposażenia pozostaje w grze.
+Po wyłączeniu funkcji lub odłączeniu ekranu wraca zwykły interfejs.
+Obsługa dotyku i układ na fizycznym Thorze wymagają jeszcze sprawdzenia.
+
+TO THE MOON — DWA EKRANY (NOWY KOD, JESZCZE BEZ NOWEGO APK)
+
+Na karcie gry lub w menu podczas grania zaznacz
+„To the Moon — interfejs dwuekranowy”. Przy dodawaniu gry z drugim ekranem
+aplikacja zapyta o aktywację po potwierdzeniu eksperymentalnego silnika.
+Ikona dwóch ekranów w bibliotece oznacza zapamiętane włączenie opcji.
+
+Dolny ekran to notatnik z zakładkami Postacie, Notatki i Przedmioty.
+Dotknij wpisu, aby przeczytać opis. Wyświetlane są aktualne postacie oraz
+zebrane wpisy, w języku samej gry. Na ekranie tytułowym jest plansza
+To the Moon; notatnik pojawia się po rozpoczęciu lub wczytaniu rozgrywki.
+Górny ekran, dialogi i zapis gry działają normalnie. Notatnik nie używa
+przedmiotów ani nie zmienia postępu. Ten profil czeka na test na Thorze.
+
+MENU I ZAPISY
+
+Obraz gry wypełnia maksymalną dostępną powierzchnię z zachowaniem proporcji.
+Pasy pozostają tylko tam, gdzie proporcje gry różnią się od proporcji ekranu.
+Menu aplikacji otworzysz półprzezroczystym przyciskiem ⋮ albo systemowym Wstecz.
+Przycisk znika po 5 sekundach bez dotykania ekranu. Dotknięcie ekranu pokazuje
+go ponownie; dotyk nadal trafia do gry. Po zakończeniu dotyku licznik rusza od nowa.
+Zapisy gry i jej konfiguracja są w prywatnych danych PadPort, osobno dla
+każdego wskazanego folderu. Używaj normalnego zapisu wewnątrz gry.
+Z menu PadPort możesz wyeksportować zapisane sloty do JSON-a i przywrócić kopię.
+Eksportuj je przed odinstalowaniem aplikacji lub wyczyszczeniem jej danych.
+Eksport kopii nie zastępuje zapisania bieżącego postępu w samej grze.
+Po zaktualizowaniu plików gry użyj „Odśwież indeks po aktualizacji gry”.
+
+SILNIK GRY (MV/MZ)
+
+Gry MV/MZ domyślnie działają w GeckoView: silniku Firefoksa wbudowanym
+w PadPort, zawsze 64-bitowym. Duże gry mają w nim dużo więcej pamięci niż
+w starszym, 32-bitowym Android System WebView (np. na AYN Thor).
+Aby dana gra używała Android System WebView, odznacz w jej menu ⋮
+„Używaj GeckoView (silnik 64-bitowy)”. Ustawienie jest zapamiętywane dla gry.
+Każdy silnik ma własne zapisy: po zmianie gra nie widzi zapisów z drugiego
+silnika (nie są usuwane - po powrocie znów są widoczne). Zapisy przeniesiesz
+eksportem w jednym silniku i importem w drugim.
+Na urządzeniach bez 64-bitowego ARM gry MV/MZ zawsze używają WebView.
+
+JĘZYK APLIKACJI
+
+Interfejs automatycznie używa języka wybranego w Androidzie: polskiego lub
+angielskiego. Dla nieobsługiwanych języków wersją zapasową jest angielska.
+Nie ma przełącznika języka w aplikacji. Tester kontrolera używa tego samego
+języka co pozostały interfejs. Ta obsługa nie tłumaczy tekstów samej gry.
+APK instaluje się jako aktualizacja wcześniejszego PadPort/RPGMPadPort.
+
+STATUS WERSJI 0.5
+
+To wersja testowa, przeznaczona dla RPG Makera MV/MZ.
+Sprawdzono na emulatorze Androida 15: wybór folderu, start Look Outside,
+rozpoczęcie nowej gry z pada, odczyt/zapis danych oraz wejście HID USB/Bluetooth
+i mapowanie klawiaturowe. Nie przeprowadzono testu na fizycznym AYN Thorze.
+W dotychczasowym APK 0.5 nie ma jeszcze opisanego wyżej panelu dwuekranowego.
+
+Gry korzystające z dodatkowych natywnych modułów Node/NW.js mogą wymagać
+osobnej adaptacji w launcherze. XP/VX/VX Ace nie należą do obsługi tej wersji.
+
+Jeżeli gra nie startuje: menu ⋮ → Diagnostyka / kopiuj log.
+Przy zgłoszeniu problemu z padem podaj model urządzenia, nazwę kontrolera
+z listy i zrzut z testera „Co widzi gra?”.

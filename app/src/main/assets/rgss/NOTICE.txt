@@ -1,0 +1,37 @@
+PadPort — RPG Maker XP / VX / VX Ace (RGSS) support
+=====================================================
+
+The native RGSS player is mkxp-z for Android:
+  mkxp-z                     https://github.com/mkxp-z/mkxp-z            GPL-2.0-or-later
+  Android port               https://github.com/thehatkid/mkxp-z-android
+  Prebuilt libraries         https://github.com/BookerRues9/mkxp-z-android-reworked
+                             release v1.0.0, commit 0828373e0ad65402eced54e6b45645fceacf6bea
+                             unsigned-release.apk SHA-256
+                             e8bc82724dcb822c7f00e11df0b932c4a8d3a7b9167e28e129fc34f3d246b600
+
+Bundled libraries (lib/arm64-v8a) and their licences:
+  libmkxp-z.so      mkxp-z (GPL-2.0-or-later); statically includes PhysFS (zlib),
+                    pixman (MIT), libogg/libvorbis/libtheora (BSD-3-Clause),
+                    uchardet (MPL-1.1/GPL/LGPL), libiconv (LGPL-2.1-or-later),
+                    Liberation Sans (OFL-1.1), WenQuanYi Micro Hei (Apache-2.0/GPL-3.0)
+  libruby.so        Ruby 3.1 (Ruby licence / BSD-2-Clause), OpenSSL 3 (Apache-2.0)
+  libSDL2*.so       SDL 2.26.3, SDL_image, SDL_ttf (FreeType: FTL), SDL_sound (zlib)
+  libopenal.so      OpenAL Soft (LGPL-2.1-or-later)
+  libc++_shared.so  LLVM libc++ (Apache-2.0 WITH LLVM-exception)
+  org.libsdl.app    SDL 2.26.3 Java glue (zlib), with one Android 14 receiver-flag fix
+
+Modification of libmkxp-z.so (tools/fetch_rgss_engine.py, PATCHES): the
+embedded GLSL sources shader/common.h ("precision mediump float" -> highp) and
+shader/tilemap.vert (autotile index clamped to 0..6, default int precision)
+are changed in place, byte-length preserving, for correct tile rendering on
+16-bit mediump GPUs such as Adreno.
+
+Because GPL code is part of the application, an APK containing this engine is
+distributed under GPL-3.0-or-later (Apache-2.0 components are GPL-3.0
+compatible) and must be accompanied by the corresponding source code:
+the PadPort sources, tools/fetch_rgss_engine.py and the upstream repositories
+listed above at the given commit.
+
+No game files, RPG Maker runtime (RTP) or Enterbrain/Gotcha Gotcha Games DLLs
+are included. RPG Maker is a trademark of its respective owners; PadPort is
+not affiliated with them.

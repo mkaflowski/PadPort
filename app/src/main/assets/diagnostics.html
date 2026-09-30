@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PadPort — controller tester</title>
+<style>
+/* Palette (same as the app, see Ui.java): #f6f6f6 #6d6a6b #5c5a59 #4d4847 #1d1c1d,
+   accent #d16197 (the palette's #907783, more saturated); #d2cace / #de95b8 = text tints. */
+body{font:16px system-ui;background:#1d1c1d;color:#f6f6f6;margin:22px}h1{font-size:24px;color:#d16197;margin:0 0 8px}
+.muted{color:#d2cace}.pad{background:#4d4847;border-radius:14px;padding:16px;margin:16px 0}.buttons{display:flex;gap:7px;flex-wrap:wrap}
+.button{min-width:48px;text-align:center;padding:8px;border-radius:8px;background:#1d1c1d;font-size:13px}.on{background:#d16197;color:#1d1c1d}
+pre{white-space:pre-wrap}.ok{color:#de95b8}
+</style></head><body>
+<h1 data-i18n="tester_heading">What does the game see?</h1><div class="muted" data-i18n="tester_hint"></div>
+<div id="pads"></div><div><span data-i18n="keyboard_events">Keyboard events: </span><strong id="keys" class="ok">0</strong></div>
+<div><span data-i18n="held_keys">Held keys: </span><strong id="heldKeys" class="ok">—</strong></div>
+<div class="muted" data-i18n="tester_footer"></div>
+<script>
+const text=window.PadPortI18n.text;
+document.documentElement.lang=window.PadPortI18n.language;document.title=text('tester_title');
+document.querySelectorAll('[data-i18n]').forEach(element=>element.textContent=text(element.dataset.i18n));
+let keys=0;const held=new Set();
+const updateHeld=()=>document.getElementById('heldKeys').textContent=Array.from(held).join(', ')||'—';
+addEventListener('keydown',e=>{document.getElementById('keys').textContent=++keys;held.add(e.code||e.key);updateHeld();});
+addEventListener('keyup',e=>{held.delete(e.code||e.key);updateHeld();});
+addEventListener('blur',()=>{held.clear();updateHeld();});
+const names=['A / ✕','B / ○','X / □','Y / △','L1','R1','L2','R2','Select','Start','L3','R3','↑','↓','←','→','Guide'];
+let shape='';
+function render(){
+ const pads=Array.from(navigator.getGamepads()||[]).filter(Boolean),root=document.getElementById('pads');
+ const mode=PadPort.inputMode(),next=mode+'|'+pads.map(p=>p.index+':'+p.id).join('|');
+ if(next!==shape||!root.children.length){
+   shape=next;root.replaceChildren();
+   if(!pads.length){const t=document.createElement('p');t.textContent=text(mode==='keyboard'?'keyboard_mode_hint':'no_controller');root.append(t);}
+   for(const p of pads){const card=document.createElement('div');card.className='pad';card.id='p'+p.index;
+     const title=document.createElement('strong');title.textContent=p.id+' · #'+p.index+' · '+p.mapping;card.append(title);
+     const axes=document.createElement('pre');axes.className='axes';card.append(axes);
+     const buttons=document.createElement('div');buttons.className='buttons';
+     names.forEach((n,i)=>{const b=document.createElement('div');b.className='button';b.dataset.index=i;b.textContent=n;buttons.append(b);});
+     card.append(buttons);root.append(card);
+   }
+ }
+ for(const p of pads){const card=document.getElementById('p'+p.index);card.querySelector('.axes').textContent=text('left_stick')+p.axes.slice(0,2).map(n=>n.toFixed(3)).join(', ')+'   '+text('right_stick')+p.axes.slice(2).map(n=>n.toFixed(3)).join(', ');
+   card.querySelectorAll('.button').forEach((b,i)=>{b.classList.toggle('on',p.buttons[i].pressed);b.textContent=names[i]+' '+p.buttons[i].value.toFixed(2);});
+ }
+ requestAnimationFrame(render);
+}render();
+</script></body></html>

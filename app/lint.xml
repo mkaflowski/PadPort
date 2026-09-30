@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Vendored SDL 2.26.3 Java glue: must match the prebuilt libSDL2.so exactly,
+         so upstream lint findings are not "fixed" locally. -->
+    <issue id="all">
+        <ignore path="src/main/java/org/libsdl/**" />
+    </issue>
+    <!-- Only GeckoView's bundled ExoPlayer contains notification helpers; PadPort posts none. -->
+    <issue id="NotificationPermission" severity="ignore" />
+</lint>

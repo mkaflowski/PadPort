@@ -1,0 +1,126 @@
+PADPORT 0.5 — RPG MAKER MV/MZ ON ANDROID
+
+1. Install PadPort-0.5-debug.apk on your phone, tablet or handheld.
+   Android 8.0+ is required. On 32-bit devices also an up-to-date
+   Android System WebView (see GAME ENGINE).
+   Install it as an update if PadPort or RPGMPadPort is already installed.
+2. Copy the complete original game folder to your device, for example:
+   Download/Games/Look Outside. Extract archives first.
+3. Open PadPort and select "Add game folder". Choose the folder containing
+   index.html, or its parent containing www. Grant access to that folder.
+4. Select "Play". Game files are read directly; no Android conversion is needed.
+
+LANGUAGE
+
+The app automatically follows the Android language settings. Polish resources
+are used for Polish; English is the fallback for unsupported languages.
+The controller tester follows the same language as the native interface.
+There is no language selector inside PadPort. Game text is not translated
+by this interface setting.
+
+CONTROLLERS
+
+Choose a control mode in controller settings:
+• Gamepad (classic) — the existing controller behavior.
+• Keyboard — controller buttons send mapped keyboard keys instead.
+
+In Keyboard mode, open "Keyboard bindings…". Select a gamepad button, then
+choose a key from the list or press one on a connected keyboard. A binding
+can also be disabled. The mode and bindings are remembered and apply to
+physical and on-screen controllers.
+Defaults: D-pad/left stick = arrows, A = Enter, B/Y/Start = Esc, X = Shift,
+L1/R1 = Q/W, L2/R2 = S/D, Select = Tab. Hold two buttons for modifier shortcuts.
+The tester shows keyboard events and held keys in Keyboard mode.
+
+The on-screen controller transparency slider ranges from 0% (maximum
+visibility) to 100% (invisible), with 50% as the default. The setting is
+remembered and applied when you return to a game or the controller tester.
+
+Enable "Show on-screen controller" in controller settings or the app menu
+while playing to use a touch D-pad, A/B/X/Y, L1/L2/R1/R2, Start and Select.
+Multiple fingers and diagonal D-pad movement are supported. The option is
+remembered and is off by default. Touch controls can be used together with
+a physical controller and remain visible while playing.
+
+Pair Bluetooth controllers in Android settings, connect USB controllers
+directly or using OTG, or use the built-in gamepad on your handheld.
+On devices such as AYN Thor, use standard gamepad mode: system touch mappers
+may intercept buttons before they reach the app.
+
+"Controllers · mapping and test" lets you select a device, map buttons,
+adjust the stick dead zone and test what the game receives through Gamepad API.
+If a controller operates as a keyboard HID, use "Map" for each button.
+These device-level mappings define logical gamepad buttons. The selected
+control mode determines whether the game receives gamepad or keyboard input.
+
+Typical RPG Maker controls: A/cross confirms, B/circle cancels, Y/triangle
+opens the game menu, and L1/R1 change pages. Games can customize these mappings.
+
+ARTWORK
+
+Card backgrounds are loaded from game title images, including standard
+encrypted MV/MZ assets. A soft blur and dimming keep text readable.
+Use the card's three-dot menu > "Card artwork…" to select a PNG/JPG/WebP,
+restore the original artwork, or search SteamGridDB/Steam in your browser.
+Wide "Hero" images work well. Download one, then choose it from your device.
+
+LOOK OUTSIDE — DUAL SCREEN (NEW SOURCE CODE, NOT IN THE CURRENT APK)
+
+Enable "Look Outside — dual-screen interface" in the game card menu or the
+in-game app menu. When you first add Look Outside with a second display
+available, the app asks whether to enable it. A two-screen badge on the card
+indicates the saved opt-in. Refreshing game files preserves this setting.
+
+The other screen shows party portraits, HP/stamina, visible states and equipped
+gear. Open inventory using the lower panel button, select an item, tap Use
+and choose its target. Inventory opened from the game's own menu stays on
+the main screen. The lower button uses the game's translated inventory label;
+the panel also loads the game's current font from its folder. Actions
+go through the original game logic and restrictions. Battle commands and
+changing equipment remain in the main game interface. Disabling the option
+or losing the display restores the normal interface.
+The physical Thor layout and dual-screen touch behavior still require testing.
+
+TO THE MOON — DUAL SCREEN (NEW SOURCE CODE, NOT IN THE CURRENT APK)
+
+Enable "To the Moon — dual-screen interface" in the game card or in-game
+app menu. When adding it with a second display available, the question comes
+after the experimental RGSS confirmation. A two-screen badge marks the opt-in.
+
+The other screen is a notebook: Characters, Notes and Items. Tap an entry
+to read its description. Only current party members and collected entries
+are shown, using the game's own language. The title screen has a To the Moon
+title card; the notebook appears after starting/loading gameplay. Browsing
+does not consume items or change progress. Physical Thor testing is pending.
+
+APP MENU AND SAVES
+
+The picture fits the available screen while preserving its aspect ratio.
+The translucent app-menu button hides after five seconds without touch.
+Touch the screen to reveal it, or use the Android Back action.
+
+Save normally inside the game. Saves are stored in PadPort's private data,
+separately for each selected game folder. Use the in-game app menu to export
+and import save backups. Export your saves before uninstalling the app or
+clearing its data. Exporting does not save your current in-game progress.
+
+GAME ENGINE (MV/MZ)
+
+MV/MZ games run in GeckoView by default: the Firefox engine built into
+PadPort, always 64-bit. Big games have much more memory there than in an
+older 32-bit Android System WebView (e.g. on the AYN Thor).
+To use the Android System WebView for a game, untick
+"Use GeckoView (64-bit engine)" in its ⋮ menu. The setting is kept per game.
+Each engine has its own saves: after switching, the game does not see the
+saves of the other engine (they are not deleted - switch back to see them).
+Move saves by exporting them in one engine and importing them in the other.
+Devices without 64-bit ARM always use the WebView for MV/MZ games.
+
+After updating a game, use "Refresh files after a game update" in its card menu.
+If it fails to start, open the app menu > "Diagnostics / copy log".
+
+COMPATIBILITY
+
+This test build targets RPG Maker MV/MZ. Games requiring extra native Node/NW.js
+modules may need game-specific launcher support. RPG Maker XP/VX/VX Ace and
+the new dual-screen Look Outside panel are not included in the existing 0.5 APK.

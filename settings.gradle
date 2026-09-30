@@ -1,0 +1,11 @@
+pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google(); mavenCentral()
+        // GeckoView (Mozilla's embeddable Firefox engine, 64-bit renderer)
+        maven { url 'https://maven.mozilla.org/maven2/'; content { includeGroup 'org.mozilla.geckoview' } }
+    }
+}
+rootProject.name = 'PadPort'
+include ':app'

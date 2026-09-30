@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Palette: https://octet.design/colors/palette/personalized-app-color-palette-1731928050/
+         #f6f6f6 #6d6a6b #5c5a59 #4d4847 #1d1c1d + accent (same values as Ui.java).
+         Accent: the palette's #907783 (hue 331, only 10 % saturation) made more
+         intense on request -> #D16197 (same hue, 55 %); 4.75:1 against #1d1c1d.
+         #D2CACE (secondary text) = #f6f6f6 + 35 % #907783: the greys of the
+         palette are too dark for text on cards (#6d6a6b on #4d4847 = 1.7:1). -->
+    <style name="AppTheme" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#D16197</item>
+        <item name="android:colorPrimary">#1D1C1D</item>
+        <item name="android:colorPrimaryDark">#1D1C1D</item>
+        <item name="android:colorControlActivated">#D16197</item>
+        <item name="android:colorControlNormal">#6D6A6B</item>
+        <item name="android:colorControlHighlight">#33F6F6F6</item>
+        <item name="android:colorButtonNormal">#5C5A59</item>
+        <item name="android:colorBackground">#1D1C1D</item>
+        <item name="android:colorBackgroundFloating">#4D4847</item>
+        <item name="android:textColorPrimary">#F6F6F6</item>
+        <item name="android:textColorSecondary">#D2CACE</item>
+        <item name="android:windowBackground">#1D1C1D</item>
+        <item name="android:statusBarColor">#1D1C1D</item>
+        <item name="android:navigationBarColor">#1D1C1D</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

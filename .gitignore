@@ -1,0 +1,20 @@
+.gradle/
+.tools/
+local.properties
+**/build/
+dist/
+test-results/
+.idea/
+*.iml
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.apk
+*.aab
+*.jks
+*.keystore
+.env
+.env.*
+!.env.example
+# Prebuilt RGSS engine, fetched and verified by tools/fetch_rgss_engine.py
+app/src/main/jniLibs/
