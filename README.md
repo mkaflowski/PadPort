@@ -23,8 +23,8 @@ your game files.
 - **Game library** with artwork from the game itself, from Steam, or your own
   picture.
 - **Save backups**: export your saves and import them again.
-- **Two screens** (e.g. AYN Thor): extra panels for *Look Outside* and
-  *To the Moon* on the second screen (experimental).
+- **Two screens** (e.g. AYN Thor): extra panels for *Look Outside*,
+  *To the Moon* and *Fear & Hunger* on the second screen (experimental).
 - **Two browser engines** for MV / MZ games: GeckoView, the 64-bit Firefox
   engine built into PadPort (default), and the Android System WebView.
   See [Why GeckoView?](#why-geckoview)
@@ -98,6 +98,7 @@ This needs a panel made for each game, so it works only with these games:
 | --- | --- | --- |
 | *Look Outside* | MZ | Your party with portraits, HP, stamina, status and gear, plus an inventory button - pick an item on the bottom screen and use it. |
 | *To the Moon* | XP | A notebook with Characters, Notes and Items. Tap an entry to read it. It only shows what you already have in your game. |
+| *Fear & Hunger* | MV | Your party with portraits, Body and Mind, lost limbs, conditions such as hunger, fear or bleeding, and equipment. In battle, a card shakes when that character loses Body. Status only - menus and battle stay on the main screen. |
 
 When you add one of these games, PadPort asks if you want the second screen.
 You can turn it on or off any time in the game's ⋮ menu or in the menu while

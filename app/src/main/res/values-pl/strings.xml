@@ -3,6 +3,7 @@
     <string name="dual_screen_option">%1$s — interfejs dwuekranowy</string>
     <string name="ttm_dual_hint">Zebrane notatki, przedmioty i biogramy aktualnych postaci na drugim ekranie. Notatnik korzysta z bieżącego stanu gry.</string>
     <string name="dual_screen_hint">Stan drużyny i ekwipunek na drugim ekranie. Ustawienie jest zapamiętywane dla tej gry.</string>
+    <string name="fh_dual_hint">Stan drużyny na drugim ekranie: portrety, ciało i umysł, utracone kończyny, stany takie jak głód, strach czy krwawienie oraz wyposażenie. Menu i walka zostają na głównym ekranie.</string>
     <string name="dual_screen_no_display">Drugi ekran jest niedostępny. Ustawienie zostaje zapamiętane; zwykły interfejs nadal działa.</string>
     <string name="dual_screen_badge">Włączony interfejs dwuekranowy</string>
     <string name="dual_screen_question_title">Użyć obu ekranów?</string>

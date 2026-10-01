@@ -93,6 +93,17 @@ are shown, using the game's own language. The title screen has a To the Moon
 title card; the notebook appears after starting/loading gameplay. Browsing
 does not consume items or change progress. Physical Thor testing is pending.
 
+FEAR & HUNGER — DUAL SCREEN (EXPERIMENTAL)
+
+Enable "Fear & Hunger — dual-screen interface" in the game card or in-game
+app menu. The other screen shows the party: portraits (they change with the
+game, e.g. after losing a limb), Body and Mind, lost limbs (arm, leg, head),
+conditions with their game icons (hunger, fear, bleeding, infection...) and
+equipment, all with the game's own names and font. It is status only: menus,
+items and battle commands stay on the main screen. In battle, a character's
+card shakes when they lose Body, as in Look Outside. Pre-title, title and game
+over show no party. Physical Thor testing is pending.
+
 APP MENU AND SAVES
 
 The picture fits the available screen while preserving its aspect ratio.

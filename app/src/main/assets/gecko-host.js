@@ -12,7 +12,7 @@
         const pad = window.PadPort;
         if (!pad) return;
         const command = String(e.data);
-        if(command==='dual-disable'){if(window.LookOutsideDual)LookOutsideDual.disable();return;}
+        if(command==='dual-disable'){if(window.LookOutsideDual)LookOutsideDual.disable();if(window.FearHungerDual)FearHungerDual.disable();return;}
         if (command === 'pause') pad.pause();
         else if (command === 'resume') pad.resume();
         else if (command === 'exportSaves') pad.exportSaves();

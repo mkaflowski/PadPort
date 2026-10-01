@@ -62,6 +62,29 @@ Pliki: `app/src/main/assets/look-outside-dual.js`, `look-outside-panel.html`,
 Pliki: `app/src/main/assets/rgss/padport_ttm_dual.rb`, `to-the-moon-panel.html`,
 `to-the-moon-panel.js`. Szczegóły odtwarzacza: [RGSS.md](RGSS.md).
 
+### Fear & Hunger — MV (tylko podgląd)
+
+- Rozpoznanie: silnik MV i tytuł dokładnie „Fear & Hunger” (nie Termina).
+- Drużyna z portretami 96 × 96 z `faceName/faceIndex` — gra podmienia plik
+  twarzy przy utracie kończyny (`Actor1` → `Actor1L`/`R`), więc klucz miniatury
+  zawiera nazwę pliku. Paski z nazwami `TextManager.hpA/mpA` (w grze: Body / Mind).
+- Utracone kończyny to stany bez ikony: 3 *Arm cut*, 14 *Leg cut*, 31 *Headless*
+  (nazwy z bazy gry, także ze spolszczenia). Pozostałe stany tylko z `iconIndex > 0`
+  (głód, strach, krwawienie, zakażenia...); techniczne stany bez ikony są pomijane.
+- Font MV: `GameFont` z `fonts/gamefont.css` (Eczar), odczytany z `document.styleSheets`;
+  w MZ nadal `FontManager._urls`.
+- `Scene_Boot`, `Scene_Title`, mapa przed tytułem (`Scene_PretitleMap` z
+  HIME_PreTitleEvents) i `Scene_Gameover` → tryb `waiting`, bez kart drużyny.
+  W walce ten sam podgląd (nazwa mapy, bez dodatkowego napisu). Spadek Ciała
+  w tej samej walce (`epoch` + numer sceny `scene`) potrząsa kartą postaci jak
+  w Look Outside (200 ms, pomijane przy „ogranicz ruch”); nowa walka, leczenie
+  i obrażenia na mapie nie animują karty.
+- Adapter ignoruje polecenia z panelu; panel ich nie wysyła.
+
+Pliki: `app/src/main/assets/fear-and-hunger-dual.js`, `fear-and-hunger-panel.html`,
+`fear-and-hunger-panel.js`; testy `tests/fear-and-hunger-dual.test.cjs`
+(`FEAR_AND_HUNGER_GAME` sprawdza bazę prawdziwej gry).
+
 ## 3. Ustawienie i zachowanie wspólne
 
 1. Tryb jest opcjonalny, domyślnie wyłączony i przypisany do konkretnej gry.
@@ -118,7 +141,8 @@ Klasy Java są w `app/src/main/java/pl/padport/app/`.
 
 ### Uwaga przy dodaniu trzeciego profilu
 
-Obecny kod ma kilka rozgałęzień **To the Moon / Look Outside**. Nie wystarczy
+Obecny kod ma kilka rozgałęzień **To the Moon / Look Outside / Fear & Hunger**.
+Strona panelu pochodzi już z `DualScreenProfile.panel(profile)`. Nie wystarczy
 dopisać tytułu do `DualScreenProfile.identify()`:
 
 - dodaj jawny wybór odpowiedniego `*-panel.html/js` w `DualScreenSession`;
@@ -299,7 +323,7 @@ a obraz zastępuje go po udanym wczytaniu. Nie wstrzymuj działania panelu dla l
 Do pracy nad kodem używaj testów bez zadań `assemble*` i bez pakowania.
 
 ```powershell
-node --test tests/dual-screen.test.cjs tests/companion-panels.test.cjs
+node --test tests/dual-screen.test.cjs tests/companion-panels.test.cjs tests/fear-and-hunger-dual.test.cjs
 & ".tools/gradle-8.9/bin/gradle.bat" --no-daemon --console=plain testDebugUnitTest lintDebug
 python tests/test_localization.py
 ```
@@ -309,6 +333,8 @@ Testy logiki z rzeczywistymi skryptami (odczyt plików, bez uruchamiania gry):
 ```powershell
 $env:LOOK_OUTSIDE_GAME="F:\DepotDownloaderMod\Look Outside"
 node --test tests/dual-screen.test.cjs
+$env:FEAR_AND_HUNGER_GAME="F:\DepotDownloaderMod\Fear & Hunger"
+node --test tests/fear-and-hunger-dual.test.cjs
 # Ruby 3.1+ lub java -jar jruby-complete.jar tests/ttm-dual-test.rb
 ruby tests/ttm-dual-test.rb
 ```

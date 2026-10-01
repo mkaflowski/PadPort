@@ -207,7 +207,8 @@ final class GameHttpServer implements Closeable {
                         .put("dualScreenProfile",DualScreenProfile.identify(source.title,source.engine));
                     String js = "window.__PADPORT_CONFIG__=" + config + ";\n" + new String(asset("gecko-host.js"), StandardCharsets.UTF_8) + "\n"
                         + new String(asset("ui-strings.js"), StandardCharsets.UTF_8) + "\n" + new String(asset("bridge.js"), StandardCharsets.UTF_8)
-                        + "\n" + new String(asset("look-outside-dual.js"),StandardCharsets.UTF_8);
+                        + "\n" + new String(asset("look-outside-dual.js"),StandardCharsets.UTF_8)
+                        + "\n" + new String(asset("fear-and-hunger-dual.js"),StandardCharsets.UTF_8);
                     bytes(out, r, "application/javascript; charset=utf-8", js.getBytes(StandardCharsets.UTF_8));
                     return true;
                 }

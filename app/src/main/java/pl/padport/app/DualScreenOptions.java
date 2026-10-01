@@ -6,8 +6,10 @@ import org.json.JSONObject;
 
 final class DualScreenOptions {
     static String description(Activity activity,JSONObject game){
-        return activity.getString(DualScreenProfile.TO_THE_MOON.equals(DualScreenProfile.identify(game.optString("title"),game.optString("engine")))
-            ?R.string.ttm_dual_hint:R.string.dual_screen_hint);
+        String profile=DualScreenProfile.identify(game.optString("title"),game.optString("engine"));
+        if(DualScreenProfile.TO_THE_MOON.equals(profile))return activity.getString(R.string.ttm_dual_hint);
+        if(DualScreenProfile.FEAR_AND_HUNGER.equals(profile))return activity.getString(R.string.fh_dual_hint);
+        return activity.getString(R.string.dual_screen_hint);
     }
     static LinearLayout controls(Activity activity,JSONObject game,Runnable changed){
         LinearLayout panel=Ui.column(activity);

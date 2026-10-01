@@ -35,7 +35,7 @@ final class DualScreenSession implements DisplayManager.DisplayListener,AutoClos
         this.source=source;
         JSONObject game=Library.get(activity,gameId);
         String profile=game==null?"":DualScreenProfile.identify(game.optString("title"),game.optString("engine"));
-        page=DualScreenProfile.TO_THE_MOON.equals(profile)?"to-the-moon-panel":"look-outside-panel";
+        page=DualScreenProfile.panel(profile);
         manager=(DisplayManager)activity.getSystemService(Activity.DISPLAY_SERVICE);
         manager.registerDisplayListener(this,main);
     }
@@ -77,7 +77,7 @@ final class DualScreenSession implements DisplayManager.DisplayListener,AutoClos
             super.onCreate(state);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             getWindow().setLayout(-1,-1);
-            web=new WebView(getContext());web.setBackgroundColor("look-outside-panel".equals(page)?Color.BLACK:Color.rgb(20,18,18));setContentView(web);
+            web=new WebView(getContext());web.setBackgroundColor("to-the-moon-panel".equals(page)?Color.rgb(20,18,18):Color.BLACK);setContentView(web);
             WebSettings settings=web.getSettings();settings.setJavaScriptEnabled(true);
             settings.setAllowFileAccess(false);settings.setAllowContentAccess(false);settings.setSupportMultipleWindows(false);
             web.addJavascriptInterface(new Object(){

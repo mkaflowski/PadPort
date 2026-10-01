@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box}html{background:#000}
+body{margin:0;padding:12px;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;background:#000;color:#d9cfbf;font:16px var(--game-font,serif);touch-action:manipulation}
+main{width:100%;max-width:680px;flex:0 0 auto;margin:auto 0}
+header{text-align:center;margin:0 0 10px}h1{font:bold 22px var(--game-font,serif);letter-spacing:.08em;margin:0;color:#b8402f}
+#mapName{font-size:14px;color:#8f8579;min-height:18px}#waiting{text-align:center;color:#8f8579;margin:24px 0}
+.party{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.actor{flex:0 1 calc(50% - 4px);min-width:0;overflow-wrap:anywhere;padding:8px;border:1px solid #4a2a24;background:#120d0c;font-size:13px}
+.actor.dead{opacity:.5;filter:grayscale(1)}
+.face{width:72px;height:72px;float:left;margin-right:8px;border:1px solid #3a2420}.face img{display:block;width:100%;height:100%;image-rendering:pixelated}
+.name{font-weight:bold;font-size:16px;color:#eee4cf}
+.gauge{font-size:12px;margin-top:3px}progress{width:100%;height:9px;accent-color:#9b2d20}progress.mind{accent-color:#5d6f8f}
+.conditions{clear:both;color:#e06b55;font-size:13px;padding-top:4px}.conditions:empty{display:none}
+.states{display:flex;flex-wrap:wrap;gap:2px 8px;padding-top:4px}.states span{display:inline-flex;align-items:center;gap:4px}
+.icon{width:24px;height:24px;image-rendering:pixelated;flex-shrink:0}
+.gear{clear:both;padding-top:6px;color:#9d9284;font-size:12px}.gear-item{display:inline-flex;align-items:center;gap:4px;vertical-align:middle}.gear-item .icon{width:16px;height:16px}
+</style><script src="ui-strings.js"></script></head>
+<body><main><header><h1 id="gameTitle">FEAR &amp; HUNGER</h1><div id="mapName"></div></header>
+<div id="waiting" hidden></div><div id="party" class="party"></div></main>
+<script src="fear-and-hunger-panel.js"></script></body></html>

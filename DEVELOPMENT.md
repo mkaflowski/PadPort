@@ -361,6 +361,7 @@ kluczem debug build testowy. APK nie zawiera plików gier.
 node --test tests/bridge.test.cjs
 node --test tests/dual-screen.test.cjs
 node --test tests/companion-panels.test.cjs
+node --test tests/fear-and-hunger-dual.test.cjs
 ruby tests/ttm-dual-test.rb
 python -m unittest discover -s tests -p "test_*.py"
 .\gradlew.bat testDebugUnitTest

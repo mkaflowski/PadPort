@@ -103,6 +103,18 @@ To the Moon; notatnik pojawia się po rozpoczęciu lub wczytaniu rozgrywki.
 Górny ekran, dialogi i zapis gry działają normalnie. Notatnik nie używa
 przedmiotów ani nie zmienia postępu. Ten profil czeka na test na Thorze.
 
+FEAR & HUNGER — DWA EKRANY (EKSPERYMENTALNE)
+
+Na karcie gry lub w menu podczas grania zaznacz
+„Fear & Hunger — interfejs dwuekranowy”. Dolny ekran pokazuje drużynę:
+portrety (zmieniają się razem z grą, np. po utracie kończyny), Ciało i Umysł,
+utracone kończyny (ręka, noga, głowa), stany z ikonami z gry (głód, strach,
+krwawienie, zakażenie...) i wyposażenie - nazwy i font pochodzą z gry. To tylko
+podgląd: menu, przedmioty i walka zostają na głównym ekranie. W walce karta
+postaci drży, gdy traci Ciało - tak jak w Look Outside. Przed tytułem,
+na ekranie tytułowym i po śmierci drużyna nie jest pokazywana. Ten profil
+czeka na test na Thorze.
+
 MENU I ZAPISY
 
 Obraz gry wypełnia maksymalną dostępną powierzchnię z zachowaniem proporcji.

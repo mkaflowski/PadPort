@@ -23,6 +23,17 @@ public class DualScreenTest {
         assertEquals(DualScreenProfile.TO_THE_MOON,DualScreenProfile.identify("To the Moon","XP"));
         assertEquals("",DualScreenProfile.identify("To the Moon","MZ"));
     }
+    @Test public void fearAndHungerGetsItsOwnReadOnlyPanelAndNoOtherAdapter() throws Exception{
+        assertEquals(DualScreenProfile.FEAR_AND_HUNGER,DualScreenProfile.identify(" Fear & Hunger ","MV"));
+        assertEquals("",DualScreenProfile.identify("Fear & Hunger","MZ"));
+        assertEquals("",DualScreenProfile.identify("Fear & Hunger 2: Termina","MV"));
+        assertEquals("fear-and-hunger-panel",DualScreenProfile.panel(DualScreenProfile.FEAR_AND_HUNGER));
+        assertEquals("look-outside-panel",DualScreenProfile.panel(DualScreenProfile.LOOK_OUTSIDE));
+        assertEquals("to-the-moon-panel",DualScreenProfile.panel(DualScreenProfile.TO_THE_MOON));
+        JSONObject game=new JSONObject().put("id","fh").put("title","Fear & Hunger").put("engine","MV");
+        assertTrue(DualScreenProfile.supports(game));assertFalse(DualScreenProfile.enabled(game));
+        assertTrue(DualScreenProfile.enabled(game.put("dualScreen",true)));
+    }
     @Test public void preferenceCanBeReloadedWithoutSharedPreferencesCache() throws Exception{
         java.io.File file=new java.io.File(temp.getRoot(),"setting");
         assertNull(DualScreenPreference.read(file));

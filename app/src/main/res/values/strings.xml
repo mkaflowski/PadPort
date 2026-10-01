@@ -3,6 +3,7 @@
     <string name="dual_screen_option">%1$s — dual-screen interface</string>
     <string name="ttm_dual_hint">Collected notes, items and current character biographies on the other display. The notebook uses the current game state.</string>
     <string name="dual_screen_hint">Party status and inventory on the other display. This setting is saved for this game.</string>
+    <string name="fh_dual_hint">Party status on the other display: portraits, body and mind, lost limbs, conditions such as hunger, fear or bleeding, and equipment. Menus and battle stay on the main screen.</string>
     <string name="dual_screen_no_display">No second display is available. The setting is remembered; the normal interface remains usable.</string>
     <string name="dual_screen_badge">Dual-screen interface enabled</string>
     <string name="dual_screen_question_title">Use both screens?</string>
