@@ -6,12 +6,14 @@ import android.content.ActivityNotFoundException;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.*;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -52,7 +54,7 @@ public class MainActivity extends LocalizedActivity {
         root.addView(Ui.text(this,R.string.library_hint,14,Ui.MUTED));
         Button add=Ui.button(this,scanning?R.string.indexing:R.string.add_game,()->{
             Intent i=new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION|Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION|Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
             startActivityForResult(i,FOLDER);
         });add.setEnabled(!scanning);root.addView(add);
         root.addView(Ui.button(this,R.string.controllers_button,()->startActivity(new Intent(this,ControllerActivity.class))));
@@ -63,7 +65,7 @@ public class MainActivity extends LocalizedActivity {
             GameCard card=new GameCard(this,game,()->launchGame(game,GameEngine.player(this,game)),()->gameOptions(game));
             cards.add(card);root.addView(card);
         }
-        root.addView(Ui.text(this,getString(R.string.library_footer,"0.5"),12,Ui.MUTED));
+        root.addView(Ui.text(this,getString(R.string.library_footer,"0.6"),12,Ui.MUTED));
         artworkObserver=root.getViewTreeObserver();artworkObserver.addOnScrollChangedListener(artworkScroll);
         root.addOnLayoutChangeListener((v,l,t,r,b,ol,ot,or,ob)->loadVisibleArtwork());
         root.post(this::loadVisibleArtwork);
@@ -157,7 +159,10 @@ public class MainActivity extends LocalizedActivity {
             try {
                 Uri uri=data.getData();
                 if((data.getFlags()&Intent.FLAG_GRANT_READ_URI_PERMISSION)==0) throw new SecurityException(getString(R.string.folder_permission_missing));
-                getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                // Write access is kept only so that PC-only runtime files can be deleted on request.
+                if((data.getFlags()&Intent.FLAG_GRANT_WRITE_URI_PERMISSION)!=0)
+                    getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                else getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 scan(uri);
             } catch(Exception e) {error(e);}
         }
@@ -168,21 +173,63 @@ public class MainActivity extends LocalizedActivity {
             try {
                 GameSource source=new GameSource(this,uri);source.scan();JSONObject record=source.metadata();
                 try{ArtworkStore.invalidateAutomatic(getApplicationContext(),source.id);}catch(Exception e){Log.w("PadPort","Unable to refresh thumbnail",e);}
+                PcRuntimeFiles.Result pcFiles=writable(uri)?PcRuntimeFiles.find(source.sizes(),source.isRgss()):null;
                 runOnUiThread(()->{
                     if(isDestroyed()) return;
                     scanning=false;
-                    Runnable add=()->{Library.put(this,record);show();Toast.makeText(this,getString(R.string.game_added,source.title),Toast.LENGTH_SHORT).show();};
-                    Runnable offerDual=()->offerDualScreen(record,add);
-                    // XP/VX/VX Ace run on the experimental native engine: ask once, when the game is added.
-                    if(source.isRgss()&&Library.get(this,source.id)==null){
-                        show();
-                        new AlertDialog.Builder(this).setTitle(R.string.rgss_experimental_title)
-                            .setMessage(getString(R.string.rgss_experimental_message,source.title,source.engine))
-                            .setPositiveButton(R.string.rgss_experimental_continue,(d,n)->offerDual.run())
-                            .setNegativeButton(R.string.cancel,null).setCancelable(false).show();
-                    }else offerDual.run();
+                    if(pcFiles!=null&&pcFiles.worthAsking())offerCleanup(source,record,pcFiles);
+                    else continueAdding(source,record);
                 });
             } catch(Exception e) {runOnUiThread(()->{scanning=false;if(!isDestroyed()){show();error(e);}});}
+        });
+    }
+    private void continueAdding(GameSource source,JSONObject record){
+        Runnable add=()->{Library.put(this,record);show();Toast.makeText(this,getString(R.string.game_added,source.title),Toast.LENGTH_SHORT).show();};
+        Runnable offerDual=()->offerDualScreen(record,add);
+        // XP/VX/VX Ace run on the experimental native engine: ask once, when the game is added.
+        if(source.isRgss()&&Library.get(this,source.id)==null){
+            show();
+            new AlertDialog.Builder(this).setTitle(R.string.rgss_experimental_title)
+                .setMessage(getString(R.string.rgss_experimental_message,source.title,source.engine))
+                .setPositiveButton(R.string.rgss_experimental_continue,(d,n)->offerDual.run())
+                .setNegativeButton(R.string.cancel,null).setCancelable(false).show();
+        }else offerDual.run();
+    }
+    private boolean writable(Uri uri){
+        for(var permission:getContentResolver().getPersistedUriPermissions())
+            if(permission.getUri().equals(uri)&&permission.isWritePermission())return true;
+        return false;
+    }
+    /** MV/MZ folders copied from a PC carry the Windows NW.js runtime (often 400+ MB); offer to delete it. */
+    private void offerCleanup(GameSource source,JSONObject record,PcRuntimeFiles.Result files){
+        show();
+        String size=Formatter.formatShortFileSize(this,files.bytes());
+        String examples=String.join(", ",PcRuntimeFiles.examples(files.paths(),5));
+        new AlertDialog.Builder(this).setTitle(R.string.cleanup_title)
+            .setMessage(getString(R.string.cleanup_message,source.title,files.paths().size(),examples,size))
+            .setPositiveButton(getString(R.string.cleanup_delete,size),(d,n)->deletePcFiles(source,record,files))
+            .setNegativeButton(R.string.cleanup_keep,(d,n)->continueAdding(source,record))
+            .setCancelable(false).show();
+    }
+    private void deletePcFiles(GameSource source,JSONObject record,PcRuntimeFiles.Result files){
+        scanning=true;show();
+        worker.execute(()->{
+            Map<String,Long> before=source.sizes();
+            List<String> failed=source.delete(files.paths());
+            long freed=0;
+            for(String path:files.paths())if(!failed.contains(path))freed+=Math.max(0,before.getOrDefault(path,0L));
+            Exception rescan=null;
+            try{source.scan();}catch(Exception e){rescan=e;}   // the index must not list deleted files
+            Exception error=rescan;long freedBytes=freed;
+            runOnUiThread(()->{
+                scanning=false;
+                if(isDestroyed())return;
+                if(error!=null){show();error(error);return;}
+                int deleted=files.paths().size()-failed.size();
+                if(failed.isEmpty())Toast.makeText(this,getString(R.string.cleanup_done,deleted,Formatter.formatShortFileSize(this,freedBytes)),Toast.LENGTH_LONG).show();
+                else Toast.makeText(this,getString(R.string.cleanup_failed,failed.size(),String.join(", ",PcRuntimeFiles.examples(failed,3))),Toast.LENGTH_LONG).show();
+                continueAdding(source,record);
+            });
         });
     }
     private void error(Exception e) {new AlertDialog.Builder(this).setTitle(R.string.open_game_error).setMessage(e.toString()).setPositiveButton(R.string.ok,null).show();}

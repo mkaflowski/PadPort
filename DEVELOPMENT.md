@@ -6,7 +6,7 @@ Opis dla graczy: [README.md](README.md). Tutaj: architektura, historia zmian, bu
 Androidowy launcher oryginalnych folderów **RPG Maker MV/MZ**, z natywnym
 wejściem gamepada: Bluetooth, USB i kontrolery wbudowane w handheldy.
 
-**APK:** `dist/PadPort-0.5-debug.apk`  
+**APK:** `dist/PadPort-0.6-debug.apk`  
 **Instrukcja użytkownika:** `HOW-TO-RUN.txt` / `JAK-URUCHOMIC.txt`
 
 **Dodawanie profili drugiego ekranu:** [DUAL_SCREEN.md](DUAL_SCREEN.md)
@@ -268,8 +268,54 @@ zawsze 64-bitowy. Różnice względem WebView:
   obsługuje ich brak; komunikat Greenworks w logu nie blokuje uruchomienia.
 
 Aplikacja nie uruchamia Windows EXE ani dowolnych natywnych modułów Node.
-Opcjonalny panel drugiego ekranu ma dedykowane profile dla Look Outside i To the Moon.
+Opcjonalny panel drugiego ekranu ma dedykowane profile dla Look Outside, To the Moon
+i Fear & Hunger.
 Zgodność konkretnych rozbudowanych pluginów musi być sprawdzana per gra.
+
+### Opcja 60 Hz (`DisplayRate.java`)
+
+Przełącznik „Ogranicz ekran do 60 Hz” w menu podczas gry MV/MZ, domyślnie
+wyłączony (plik `limit-60hz.enabled`). Włączony ustawia
+`preferredDisplayModeId` okna gry (i panelu drugiego ekranu) na tryb ~60 Hz
+o bieżącej rozdzielczości; wyłączony przywraca 0 (domyślne systemu). Logika
+MV/MZ i tak działa w 60 krokach/s, a opcja „Unlimited” gry (PIXI
+`maxFPS = 0`) na ekranach 120 Hz rysowała 120 klatek. Na Thorze sprawdzone:
+górny ekran przechodzi na `refreshRate=60.000004`.
+
+### Pliki Windows w folderze gry (`PcRuntimeFiles.java`)
+
+Przy dodaniu lub odświeżeniu gry MV/MZ PadPort liczy pliki środowiska NW.js
+i Steam (`*.dll`, `*.exe`, `*.node`, `*.pak`, `icudtl.dat`, `*_blob.bin`,
+`v8_context_snapshot.bin` w katalogu głównym, oraz `locales/*.pak(.info)`,
+`swiftshader/*.dll`, `lib/*.dll|*.node`). Od 5 MB pyta o usunięcie z listą
+przykładów i rozmiarem (Elderfield: 481 plików, 540 MB). Nigdy nie rusza
+głębszych folderów, `www/`, plików tekstowych ani gier RGSS. Wymaga trwałego
+uprawnienia zapisu do drzewa SAF — PadPort je zapamiętuje przy wyborze
+folderu; gry dodane starszą wersją trzeba dodać ponownie, żeby pytanie się
+pojawiło. Po usunięciu indeks jest skanowany ponownie.
+
+### Zgodność gier (`GameCompat.java`, `assets/game-compat.js`)
+
+- **FOSSIL (każda gra MZ):** gdy FOSSIL jest pierwszym włączonym pluginem,
+  pod NW.js zapisuje `FOSSILindex.html` (`index.html` z `js/main.js` →
+  `js/plugins/FOSSIL.js`) i przeładowuje stronę. PadPort nie zapisuje plików
+  gry, więc sam podaje tę stronę zamiast `index.html` (`GameCompat.entry`).
+  Tryb główny FOSSIL nie używa Node.
+- **Welcome to Elderfield (MZ), profil `welcome-to-elderfield`:**
+  - `nodeShim: false` — bez `require`. Cyclone-Steam i WTE_PluginToggleManager
+    po wykryciu `require` czytają `process.*` przy ładowaniu i gra staje przed
+    tytułem. Pozostałe użycia Node są w grze zabezpieczone (`Utils.isNwjs()`)
+    albo mają ścieżkę przeglądarkową (Hendrix_Localization_Core: XHR).
+  - LookupTableComparison: lista `Tables/**/*.csv` z indeksu folderu trafia do
+    konfiguracji, a hook `preloadAll` wczytuje je kluczami jak skan NW.js
+    (`Gifts/AliceLoves`). Bez tego wszystkie reakcje NPC na prezenty są fałszywe.
+  - SimpleMusicPlayer (radio, „The Weather Channel”): `isSongFileExists()`
+    używa `process.mainModule` bez try/catch; podmieniane w prototypie sceny
+    (hook `SceneManager.onSceneCreate`) na zapytanie HEAD. Odtwarzanie i tak
+    wraca do względnej ścieżki `media/player/*.ogg` (zakresy bajtów).
+  - Testy: `tests/game-compat.test.cjs` i `GameCompatTest` (z
+    `ELDERFIELD_GAME` także na prawdziwych plikach gry, w tym porównanie z
+    dostarczonym `FOSSILindex.html`).
 
 ## RPG Maker XP / VX / VX Ace (RGSS) — w kodzie, jeszcze nie w wydanym APK
 
@@ -362,6 +408,8 @@ node --test tests/bridge.test.cjs
 node --test tests/dual-screen.test.cjs
 node --test tests/companion-panels.test.cjs
 node --test tests/fear-and-hunger-dual.test.cjs
+node --test tests/game-compat.test.cjs
+node --test tests/elderfield-dual.test.cjs
 ruby tests/ttm-dual-test.rb
 python -m unittest discover -s tests -p "test_*.py"
 .\gradlew.bat testDebugUnitTest

@@ -21,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ADB = ROOT / ".tools/android-sdk/platform-tools/adb.exe"
-APK = ROOT / "dist/PadPort-0.5-debug.apk"
+APK = ROOT / "dist/PadPort-0.6-debug.apk"
 PACKAGE = "pl.padport.app"
 
 

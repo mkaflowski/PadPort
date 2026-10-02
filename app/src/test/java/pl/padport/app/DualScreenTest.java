@@ -23,6 +23,13 @@ public class DualScreenTest {
         assertEquals(DualScreenProfile.TO_THE_MOON,DualScreenProfile.identify("To the Moon","XP"));
         assertEquals("",DualScreenProfile.identify("To the Moon","MZ"));
     }
+    @Test public void welcomeToElderfieldHasItsOwnPanelOnMzOnly() throws Exception{
+        assertEquals(DualScreenProfile.ELDERFIELD,DualScreenProfile.identify("Welcome to Elderfield","MZ"));
+        assertEquals("",DualScreenProfile.identify("Welcome to Elderfield","MV"));
+        assertEquals("elderfield-panel",DualScreenProfile.panel(DualScreenProfile.ELDERFIELD));
+        JSONObject game=new JSONObject().put("id","ef").put("title","Welcome to Elderfield").put("engine","MZ");
+        assertTrue(DualScreenProfile.supports(game));assertTrue(DualScreenProfile.shouldOffer(game,false,true));
+    }
     @Test public void fearAndHungerGetsItsOwnReadOnlyPanelAndNoOtherAdapter() throws Exception{
         assertEquals(DualScreenProfile.FEAR_AND_HUNGER,DualScreenProfile.identify(" Fear & Hunger ","MV"));
         assertEquals("",DualScreenProfile.identify("Fear & Hunger","MZ"));

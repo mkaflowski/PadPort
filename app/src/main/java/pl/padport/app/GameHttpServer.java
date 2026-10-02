@@ -205,15 +205,18 @@ final class GameHttpServer implements Closeable {
                     JSONObject config = new JSONObject().put("title", source.title).put("engine", source.engine)
                         .put("language", AppLanguage.code(context)).put("renderer", "gecko")
                         .put("dualScreenProfile",DualScreenProfile.identify(source.title,source.engine));
+                    GameCompat.config(config,source);
                     String js = "window.__PADPORT_CONFIG__=" + config + ";\n" + new String(asset("gecko-host.js"), StandardCharsets.UTF_8) + "\n"
                         + new String(asset("ui-strings.js"), StandardCharsets.UTF_8) + "\n" + new String(asset("bridge.js"), StandardCharsets.UTF_8)
+                        + "\n" + new String(asset("game-compat.js"),StandardCharsets.UTF_8)
                         + "\n" + new String(asset("look-outside-dual.js"),StandardCharsets.UTF_8)
-                        + "\n" + new String(asset("fear-and-hunger-dual.js"),StandardCharsets.UTF_8);
+                        + "\n" + new String(asset("fear-and-hunger-dual.js"),StandardCharsets.UTF_8)
+                        + "\n" + new String(asset("elderfield-dual.js"),StandardCharsets.UTF_8);
                     bytes(out, r, "application/javascript; charset=utf-8", js.getBytes(StandardCharsets.UTF_8));
                     return true;
                 }
                 case "index.html": {
-                    String html = new String(source.read(path, 4 * 1024 * 1024), StandardCharsets.UTF_8);
+                    String html = GameCompat.entry(source, new String(source.read(path, 4 * 1024 * 1024), StandardCharsets.UTF_8));
                     bytes(out, r, "text/html; charset=utf-8", inject(html).getBytes(StandardCharsets.UTF_8));
                     return true;
                 }

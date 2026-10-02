@@ -47,6 +47,7 @@ public class PlayerActivity extends LocalizedActivity {
         super.onCreate(state);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         root=new FrameLayout(this);root.setBackgroundColor(Color.BLACK);setContentView(root);
+        DisplayRate.apply(this);
         controllers=new ControllerHub(this);controllers.onChange=this::updateKeyboard;controllers.start();
         TextView loading=Ui.text(this,R.string.opening_game,20,Ui.TEXT);loading.setGravity(Gravity.CENTER);
         root.addView(loading,new FrameLayout.LayoutParams(-1,-1));
@@ -136,7 +137,7 @@ public class PlayerActivity extends LocalizedActivity {
         if(web!=null&&webReady&&foreground&&menu==null&&hasWindowFocus()&&controllers.keyboardMode())keyboard.update(controllers.keyboardKeys());
         else keyboard.clear();
     }
-    private void pauseGame(){if(dualScreen!=null)dualScreen.pause();js("if(window.LookOutsideDual)LookOutsideDual.disable();if(window.FearHungerDual)FearHungerDual.disable()");menuHandler.removeCallbacks(hideMenuButton);touchingScreen=false;if(virtualControls!=null)virtualControls.suspend();if(controllers!=null)controllers.clear(true);js("PadPort.pause()");if(web!=null)web.onPause();}
+    private void pauseGame(){if(dualScreen!=null)dualScreen.pause();js("if(window.LookOutsideDual)LookOutsideDual.disable();if(window.FearHungerDual)FearHungerDual.disable();if(window.ElderfieldDual)ElderfieldDual.disable()");menuHandler.removeCallbacks(hideMenuButton);touchingScreen=false;if(virtualControls!=null)virtualControls.suspend();if(controllers!=null)controllers.clear(true);js("PadPort.pause()");if(web!=null)web.onPause();}
     private void resumeGame(){if(controllers!=null)controllers.clear(false);if(web!=null){web.onResume();js("PadPort.resume()");web.requestFocus();immersive();refreshVirtualController();showMenuButton();if(dualScreen!=null)dualScreen.resume();}}
     private void refreshVirtualController(){
         if(virtualControls!=null)virtualControls.configure(VirtualControllerSettings.enabled(this),foreground&&menu==null&&hasWindowFocus());
@@ -148,6 +149,7 @@ public class PlayerActivity extends LocalizedActivity {
             :new String[]{getString(R.string.back_to_game),getString(R.string.controller_mapping),getString(R.string.export_saves),getString(R.string.import_saves),getString(R.string.diagnostics_copy_log),getString(R.string.back_to_library)};
         LinearLayout settings=Ui.column(this);
         settings.addView(VirtualControllerSettings.checkbox(this,enabled->refreshVirtualController()));
+        if(source!=null)settings.addView(DisplayRate.checkbox(this));
         if(source!=null)settings.addView(DualScreenOptions.controls(this,Library.get(this,source.id),()->{}));
         menu=Ui.menuDialog(this,source==null?getString(R.string.controller_tester):source.title,options,settings,(dialog,n)->{
             if(n==1)startActivity(new Intent(this,ControllerActivity.class));

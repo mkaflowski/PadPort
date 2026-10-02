@@ -1,6 +1,6 @@
-PADPORT 0.5.0 PREVIEW — RPG MAKER NA ANDROIDZIE
+PADPORT 0.6.0 PREVIEW — RPG MAKER NA ANDROIDZIE
 
-1. Zainstaluj PadPort-0.5-debug.apk na telefonie, tablecie lub handheldzie.
+1. Zainstaluj PadPort-0.6-debug.apk na telefonie, tablecie lub handheldzie.
    Wymagany Android 8.0+ i urządzenie ARM64. Ten APK zawiera silniki 64-bitowe.
 2. Skopiuj CAŁY oryginalny folder gry na urządzenie, np. do
    Download/Gry/Look Outside. Archiwum gry najpierw rozpakuj.
@@ -115,6 +115,16 @@ postaci drży, gdy traci Ciało - tak jak w Look Outside. Przed tytułem,
 na ekranie tytułowym i po śmierci drużyna nie jest pokazywana. Ten profil
 czeka na test na Thorze.
 
+WELCOME TO ELDERFIELD — DWA EKRANY (EKSPERYMENTALNE)
+
+Na karcie gry lub w menu podczas grania zaznacz
+„Welcome to Elderfield — interfejs dwuekranowy”. Dolny ekran pokazuje postać
+(portret z kreatora, HP/MP, energia, efekty, wyposażenie) oraz godzinę, pogodę
+i złoto. Niebo zmienia się z porą dnia, porą roku i pogodą w grze. Przycisk
+przedmiotów otwiera menu przedmiotów gry: wybierz kategorię i przedmiot, potem
+użyj go z dolnego ekranu. Okna gry (akcja, cel, wyrzucenie) pojawiają się tam
+jako przyciski i zostają też na głównym ekranie. Profil czeka na test na Thorze.
+
 MENU I ZAPISY
 
 Obraz gry wypełnia maksymalną dostępną powierzchnię z zachowaniem proporcji.
@@ -149,10 +159,10 @@ Nie ma przełącznika języka w aplikacji. Tester kontrolera używa tego samego
 języka co pozostały interfejs. Ta obsługa nie tłumaczy tekstów samej gry.
 APK instaluje się jako aktualizacja wcześniejszego PadPort/RPGMPadPort.
 
-STATUS WERSJI 0.5.0 PREVIEW (BUILD 7)
+STATUS WERSJI 0.6.0 PREVIEW (BUILD 8)
 
 To wersja testowa z obsługą MV/MZ oraz eksperymentalną obsługą XP/VX/VX Ace
-i paneli dwuekranowych. Build 7 został zainstalowany na AYN Thorze.
+i paneli dwuekranowych. Build 8 został zainstalowany na AYN Thorze.
 Zgodność poszczególnych gier i funkcji wymaga dalszych testów.
 
 Gry korzystające z dodatkowych natywnych modułów Node/NW.js mogą wymagać

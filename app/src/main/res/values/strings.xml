@@ -3,6 +3,7 @@
     <string name="dual_screen_option">%1$s — dual-screen interface</string>
     <string name="ttm_dual_hint">Collected notes, items and current character biographies on the other display. The notebook uses the current game state.</string>
     <string name="dual_screen_hint">Party status and inventory on the other display. This setting is saved for this game.</string>
+    <string name="ef_dual_hint">Your character on the other display: portrait, HP/MP, energy, effects and gear, with the time, weather and gold. The sky follows the time of day and the season. The item menu can be used from the lower screen through the game\'s own actions.</string>
     <string name="fh_dual_hint">Party status on the other display: portraits, body and mind, lost limbs, conditions such as hunger, fear or bleeding, and equipment. Menus and battle stay on the main screen.</string>
     <string name="dual_screen_no_display">No second display is available. The setting is remembered; the normal interface remains usable.</string>
     <string name="dual_screen_badge">Dual-screen interface enabled</string>
@@ -33,6 +34,13 @@
     <string name="artwork_saved">Artwork saved.</string>
     <string name="folder_permission_missing">Read access to this folder was not granted.</string>
     <string name="game_added">Added: %1$s</string>
+    <string name="limit_60hz">Limit the screen to 60 Hz (RPG Maker games run at 60 FPS; saves battery on 90/120 Hz screens)</string>
+    <string name="cleanup_title">Free up space?</string>
+    <string name="cleanup_message">%1$s contains files that are only needed to run the game on Windows (%2$d: NW.js, Chromium and Steam libraries), e.g. %3$s.\n\nPadPort does not use them. Deleting them frees %4$s.\n\nThe game in this folder will no longer start on a PC, and this cannot be undone. Game data and saves are not touched.</string>
+    <string name="cleanup_delete">Delete (%1$s)</string>
+    <string name="cleanup_keep">Keep</string>
+    <string name="cleanup_done">Deleted %1$d files, freed %2$s</string>
+    <string name="cleanup_failed">%1$d files could not be deleted: %2$s</string>
     <string name="open_game_error">Unable to open game</string>
     <string name="game_details">RPG Maker %1$s  •  separate game saves</string>
     <string name="play">Play</string>

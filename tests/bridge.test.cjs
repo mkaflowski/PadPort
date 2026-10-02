@@ -35,7 +35,10 @@ function setup(language, files={}) {
     const events=[], local=new Map(), forage=new Map(), listeners=new Map();
     let clears=0;
     const server=fakeServer(files);
-    const sandbox={console, Event:class Event{constructor(type){this.type=type;}}, Blob, ArrayBuffer, Uint8Array, URL, setTimeout,
+    // Gecko-like fullscreen API: requests outside a user gesture reject.
+    class Element { mozRequestFullScreen(){ return Promise.reject(new TypeError('Fullscreen request denied')); } }
+    class Document { mozCancelFullScreen(){ return Promise.reject(new TypeError('Not in fullscreen')); } }
+    const sandbox={console, Element, Document, Event:class Event{constructor(type){this.type=type;}}, Blob, ArrayBuffer, Uint8Array, URL, setTimeout,
         XMLHttpRequest:server.XMLHttpRequest, document:{baseURI:'https://g1.padport.local/index.html'},
         performance:{now:()=>42}, navigator:{}, __PADPORT_CONFIG__:{title:'Test Game',engine:'MZ',language},
         localStorage:{get length(){return local.size;}, key:i=>[...local.keys()][i],getItem:k=>local.get(k)??null,
@@ -74,6 +77,15 @@ test('RPG Maker remains in browser storage mode',()=>{
     const t=setup();assert.equal(typeof t.sandbox.process,'undefined');assert.equal(typeof t.sandbox.nw,'undefined');
     assert.equal(t.sandbox.require('os').userInfo().username,'Player');
     assert.throws(()=>t.sandbox.require('child_process'),/module is unavailable/);
+});
+test('fullscreen requests (CGMZ Start Fullscreen, F4) cannot stop the game in an already fullscreen player',async()=>{
+    const t=setup();
+    const body=new t.sandbox.Element(),doc=new t.sandbox.Document();
+    // rmmz_core Graphics._requestFullScreen picks the first variant that exists.
+    for(const name of ['requestFullScreen','mozRequestFullScreen','webkitRequestFullScreen','requestFullscreen','webkitRequestFullscreen'])
+        await assert.doesNotReject(body[name](),name);
+    for(const name of ['cancelFullScreen','mozCancelFullScreen','webkitCancelFullScreen','exitFullscreen','webkitExitFullscreen'])
+        await assert.doesNotReject(doc[name](),name);
 });
 test('Look Outside monsterImageExists() works: read-only fs over the game server',()=>{
     const t=setup('en',{'img/enemies/EyeZombies/Zombie_KnifeEye_Far.png_':[1,2,3,4]});

@@ -58,14 +58,18 @@ final class GameWebClient extends WebViewClient {
                 JSONObject config=new JSONObject().put("title",source==null?context.getString(R.string.controller_tester):source.title)
                     .put("engine",source==null?"diagnostics":source.engine).put("language",AppLanguage.code(context))
                     .put("dualScreenProfile",source==null?"":DualScreenProfile.identify(source.title,source.engine));
+                GameCompat.config(config,source);
                 return bytes("application/javascript",("window.__PADPORT_CONFIG__="+config+";\n"+
                     new String(asset("ui-strings.js"),StandardCharsets.UTF_8)+"\n"+new String(asset("bridge.js"),StandardCharsets.UTF_8)+"\n"+
+                    new String(asset("game-compat.js"),StandardCharsets.UTF_8)+"\n"+
                     new String(asset("look-outside-dual.js"),StandardCharsets.UTF_8)+"\n"+
-                    new String(asset("fear-and-hunger-dual.js"),StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8));
+                    new String(asset("fear-and-hunger-dual.js"),StandardCharsets.UTF_8)+"\n"+
+                    new String(asset("elderfield-dual.js"),StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8));
             }
             if(path.equals("index.html")) {
                 byte[] html=source==null?asset("diagnostics.html"):source.read(path,4*1024*1024);
-                return bytes("text/html",inject(new String(html,StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8));
+                String page=GameCompat.entry(source,new String(html,StandardCharsets.UTF_8));
+                return bytes("text/html",inject(page).getBytes(StandardCharsets.UTF_8));
             }
             if(source==null) return error(404,"Not found",path);
             GameSource.Entry entry=source.entry(path);

@@ -12,7 +12,11 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
 
-/** Read-only SAF tree. Keeps an index of document IDs, not a second copy of the game. */
+/**
+ * SAF tree of the game folder. Keeps an index of document IDs, not a second copy of the game.
+ * Games are only read; the one exception is {@link #delete}, used for PC-only runtime files
+ * after the user confirmed the list (PcRuntimeFiles).
+ */
 final class GameSource {
     final Context context;
     final Uri tree;
@@ -109,6 +113,14 @@ final class GameSource {
     byte[] read(String relative,int limit) throws IOException {
         try(InputStream in=open(relative)) {return readBounded(context,in,limit);}
     }
+    /** The first {@code count} bytes (fewer for shorter files). */
+    byte[] head(String relative,int count) throws IOException {
+        try(InputStream in=open(relative)) {
+            byte[] buffer=new byte[count];int total=0,n;
+            while(total<count&&(n=in.read(buffer,total,count-total))!=-1)total+=n;
+            return Arrays.copyOf(buffer,total);
+        }
+    }
     static byte[] readBounded(InputStream in,int limit) throws IOException {
         return readBounded(null,in,limit);
     }
@@ -125,6 +137,25 @@ final class GameSource {
         JSONObject result=new JSONObject().put("id",id).put("uri",tree.toString()).put("title",title).put("engine",engine).put("prefix",prefix);
         if(exec!=null) result.put("exec",exec).put("rgss",rgss);
         return result;
+    }
+    /** Indexed files: path relative to the picked folder -> size in bytes (-1 if unknown). */
+    Map<String,Long> sizes(){
+        Map<String,Long> result=new LinkedHashMap<>();
+        for(var e:entries.entrySet())result.put(e.getKey(),e.getValue().size());
+        return result;
+    }
+    /** Deletes indexed files; returns the paths that could not be deleted. Call scan() afterwards. */
+    List<String> delete(List<String> paths){
+        List<String> failed=new ArrayList<>();
+        ContentResolver resolver=context.getContentResolver();
+        for(String path:paths){
+            Entry entry=entries.get(path);
+            if(entry==null)continue;
+            try{
+                if(!DocumentsContract.deleteDocument(resolver,DocumentsContract.buildDocumentUriUsingTree(tree,entry.documentId())))failed.add(path);
+            }catch(Exception e){failed.add(path);}
+        }
+        return failed;
     }
     boolean isRgss(){return exec!=null;}
     int rgssVersion(){return rgss;}

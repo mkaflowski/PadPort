@@ -9,6 +9,7 @@ final class DualScreenOptions {
         String profile=DualScreenProfile.identify(game.optString("title"),game.optString("engine"));
         if(DualScreenProfile.TO_THE_MOON.equals(profile))return activity.getString(R.string.ttm_dual_hint);
         if(DualScreenProfile.FEAR_AND_HUNGER.equals(profile))return activity.getString(R.string.fh_dual_hint);
+        if(DualScreenProfile.ELDERFIELD.equals(profile))return activity.getString(R.string.ef_dual_hint);
         return activity.getString(R.string.dual_screen_hint);
     }
     static LinearLayout controls(Activity activity,JSONObject game,Runnable changed){

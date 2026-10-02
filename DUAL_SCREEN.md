@@ -85,6 +85,35 @@ Pliki: `app/src/main/assets/fear-and-hunger-dual.js`, `fear-and-hunger-panel.htm
 `fear-and-hunger-panel.js`; testy `tests/fear-and-hunger-dual.test.cjs`
 (`FEAR_AND_HUNGER_GAME` sprawdza bazę prawdziwej gry).
 
+### Welcome to Elderfield — MZ (karta, HUD, menu przedmiotów)
+
+- Rozpoznanie: MZ i tytuł „Welcome to Elderfield”; ta sama gra ma profil
+  zgodności `GameCompat` (bez `require`, FOSSIL, tabele, radio).
+- Karta jedynej postaci: portret z kreatora (`KC_CompositeBitmaps` — nowa bitmapa
+  po zmianie wyglądu, więc w kluczu jest jej numer), poziom, HP/MP, energia (V1475),
+  stany z ikonami, wyposażenie. Drżenie przy spadku HP w tej samej walce.
+- HUD: V1618 godzina, V1619 dzień/pora roku, złoto (animowane „+N/−N”).
+- Niebo: V123 pora dnia (1 świt, 2 dzień, 3 zmierzch, 4 noc), V125 pora roku
+  (0–3), pogoda V243 (2/6/7/8 deszcz, 4 burza, 3 pochmurno) i przełączniki
+  1121/1123 (śnieg), 1122 (burza). Płynne przejścia przez `@property`;
+  animacje deszczu/śniegu wyłączane przy „ogranicz ruch”.
+- Menu przedmiotów: przycisk otwiera `Scene_Item` z mapy (jak skrót gry, CE 313).
+  Górne menu zostaje widoczne — okna akcji, celu i wyrzucania są poza warstwą
+  okien i reagują na dotyk, więc ich nie ukrywamy. Panel jest pilotem:
+  kategoria → `select` + `setCategory` (bez `processOk`, który tu nic nie robi),
+  przedmiot → najpierw `deactivate()` kategorii, potem `activate/select` listy,
+  „Użyj” → `processOk()` listy (DM_ItemActions: Use/Eat, okno akcji, zdarzenie
+  wspólne, wyrzucenie). Otwarte okno gry (`_confirmationCommands`,
+  `_customItemActionWindow`, `_itemActionWindow`, `_actorWindow`) przejmuje
+  wejście i jest pokazywane jako przyciski (`select(i)` + `processOk()`,
+  „Wstecz” = `processCancel()`). Etykieta „Użyj” z notetagu `<actions>`
+  (np. „Eat”), puste `<actions>` = nieużywalne. Zaślepka `isDummyItem` pomijana.
+- Nazwy, opisy i kategorie przez `WTE_Translate` (tłumaczenia gry),
+  kody `\c[n]`/`\i[n]` usuwane, `<br>` → nowa linia.
+
+Pliki: `app/src/main/assets/elderfield-dual.js`, `elderfield-panel.html`,
+`elderfield-panel.js`; testy `tests/elderfield-dual.test.cjs` (`ELDERFIELD_GAME`).
+
 ## 3. Ustawienie i zachowanie wspólne
 
 1. Tryb jest opcjonalny, domyślnie wyłączony i przypisany do konkretnej gry.

@@ -24,7 +24,8 @@ your game files.
   picture.
 - **Save backups**: export your saves and import them again.
 - **Two screens** (e.g. AYN Thor): extra panels for *Look Outside*,
-  *To the Moon* and *Fear & Hunger* on the second screen (experimental).
+  *To the Moon*, *Fear & Hunger* and *Welcome to Elderfield* on the second
+  screen (experimental).
 - **Two browser engines** for MV / MZ games: GeckoView, the 64-bit Firefox
   engine built into PadPort (default), and the Android System WebView.
   See [Why GeckoView?](#why-geckoview)
@@ -46,6 +47,11 @@ your game files.
 3. Open PadPort, tap **Add game folder** and pick the game folder (the one with
    `index.html`, or the one that contains `www`). Allow access when asked.
 4. Tap **Play**.
+
+Game folders copied from a PC often carry the Windows runtime (NW.js, Chromium,
+Steam libraries), which can be hundreds of MB. When you add an MV / MZ game,
+PadPort lists those files with their total size and offers to delete them.
+It never touches game data or saves, and asks before deleting anything.
 
 When the game gets an update on PC, copy the new files over and use
 **Refresh files after a game update** in the game's ⋮ menu.
@@ -99,6 +105,7 @@ This needs a panel made for each game, so it works only with these games:
 | *Look Outside* | MZ | Your party with portraits, HP, stamina, status and gear, plus an inventory button - pick an item on the bottom screen and use it. |
 | *To the Moon* | XP | A notebook with Characters, Notes and Items. Tap an entry to read it. It only shows what you already have in your game. |
 | *Fear & Hunger* | MV | Your party with portraits, Body and Mind, lost limbs, conditions such as hunger, fear or bleeding, and equipment. In battle, a card shakes when that character loses Body. Status only - menus and battle stay on the main screen. |
+| *Welcome to Elderfield* | MZ | Your character (portrait from the character creator, HP/MP, energy, effects, gear), the time, weather and gold, under a sky that follows the time of day, season and weather. Open the game's item menu and use items from the bottom screen; the game's own action, target and discard prompts appear as buttons. |
 
 When you add one of these games, PadPort asks if you want the second screen.
 You can turn it on or off any time in the game's ⋮ menu or in the menu while
@@ -116,6 +123,9 @@ Want this for another game? See
 - From that menu you can **Export saved games**, **Import save backup**, show
   the on-screen controller, turn the second screen on or off, copy a diagnostic
   log, or go **Back to library**.
+- **Limit the screen to 60 Hz** (off by default, MV / MZ): RPG Maker games run
+  at 60 FPS, so on 90 / 120 Hz screens (e.g. AYN Thor) this saves battery. A
+  game's "unlimited" FPS option then means exactly 60.
 
 ## Saves
 
@@ -153,6 +163,21 @@ are there again. To move saves, use **Export saved games** in one engine and
 If something works in one engine and not in the other, please
 [open an issue](../../issues/new).
 
+## Games with extra fixes
+
+Some games use PC-only add-ons. PadPort carries small fixes for those it knows:
+
+| Game | RPG Maker | What PadPort fixes |
+| --- | --- | --- |
+| *Welcome to Elderfield* | MZ | Starts at all (its Steam and plugin-toggle add-ons stop it outside the PC version). NPC gift reactions work (gift tables are loaded). The in-game radio, including *The Weather Channel*, plays. Also has a [second-screen panel](#two-screens). |
+| Games using the **FOSSIL** plugin | MZ | FOSSIL rewrites its start page on PC; PadPort serves that page directly. |
+| Games that ask for **full screen** at start | MV / MZ | The request is answered as done - PadPort is already full screen - instead of stopping the game. |
+
+Folders copied from a PC usually also contain the Windows runtime (NW.js,
+Chromium, Steam libraries) - for *Welcome to Elderfield* about 540 MB. When you
+add an MV / MZ game, PadPort lists these files with their size and offers to
+delete them (game data and saves are never touched).
+
 ## If something goes wrong
 
 - **The game does not start or shows an error:** open the menu while playing
@@ -180,8 +205,8 @@ If something works in one engine and not in the other, please
   a button does not work,
 - the log from **Diagnostics / copy log**, if the game starts at all.
 
-Want a **second-screen panel** for a game, like the ones for *Look Outside* and
-*To the Moon*? Open an issue too, and write what you would like to see on the
+Want a **second-screen panel** for a game, like the ones for *Look Outside*,
+*To the Moon*, *Fear & Hunger* or *Welcome to Elderfield*? Open an issue too, and write what you would like to see on the
 second screen (party, map, inventory, notes...).
 
 ## For developers

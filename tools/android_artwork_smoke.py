@@ -32,7 +32,7 @@ def make_png(path):
 
 def main():
     assert SERIAL.startswith("emulator-")
-    adb("install","-r",str(ROOT/"dist/PadPort-0.5-debug.apk"))
+    adb("install","-r",str(ROOT/"dist/PadPort-0.6-debug.apk"))
     shell("am","force-stop","com.google.android.documentsui");shell("am","force-stop","pl.padport.app")
     shell("am","start","-W","-f","0x10008000","-n","pl.padport.app/.MainActivity")
     select_language("pl")

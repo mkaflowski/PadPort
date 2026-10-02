@@ -14,4 +14,12 @@ final class RpgImage {
         for(int i=0;i<16;i++) body[i]^=(byte)Integer.parseInt(key.substring(i*2,i*2+2),16);
         return body;
     }
+    /** {width, height} from the first 40+ bytes of a (possibly encrypted) PNG, or null. */
+    static int[] pngSize(byte[] head,String key){
+        byte[] png;
+        try{png=decode(head,key);}catch(IOException e){return null;}
+        if(png.length<24||(png[0]&0xff)!=0x89||png[1]!='P'||png[2]!='N'||png[3]!='G'||png[12]!='I'||png[13]!='H'||png[14]!='D'||png[15]!='R')return null;
+        int w=java.nio.ByteBuffer.wrap(png,16,4).getInt(),h=java.nio.ByteBuffer.wrap(png,20,4).getInt();
+        return w>0&&h>0?new int[]{w,h}:null;
+    }
 }

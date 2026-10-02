@@ -1,4 +1,4 @@
-"""Build and test the development APK, and prepare dist/PadPort-0.5-debug.apk."""
+"""Build and test the development APK, and prepare dist/PadPort-0.6-debug.apk."""
 import os
 import shutil
 import subprocess

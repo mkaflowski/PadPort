@@ -13,7 +13,7 @@ def package():
         assert archive.read("assets/bridge.js")== (ROOT/"app/src/main/assets/bridge.js").read_bytes(),"APK has an old bridge"
         assert archive.read("assets/ui-strings.js")== (ROOT/"app/src/main/assets/ui-strings.js").read_bytes(),"APK has old UI translations"
     dist=ROOT/"dist";dist.mkdir(exist_ok=True)
-    target=dist/"PadPort-0.5-debug.apk";shutil.copy2(apk,target)
+    target=dist/"PadPort-0.6-debug.apk";shutil.copy2(apk,target)
     shutil.copy2(ROOT/"JAK-URUCHOMIC.txt",dist/"JAK-URUCHOMIC.txt")
     shutil.copy2(ROOT/"HOW-TO-RUN.txt",dist/"HOW-TO-RUN.txt")
     digest=hashlib.sha256(target.read_bytes()).hexdigest()

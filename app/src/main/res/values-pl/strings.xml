@@ -3,6 +3,7 @@
     <string name="dual_screen_option">%1$s — interfejs dwuekranowy</string>
     <string name="ttm_dual_hint">Zebrane notatki, przedmioty i biogramy aktualnych postaci na drugim ekranie. Notatnik korzysta z bieżącego stanu gry.</string>
     <string name="dual_screen_hint">Stan drużyny i ekwipunek na drugim ekranie. Ustawienie jest zapamiętywane dla tej gry.</string>
+    <string name="ef_dual_hint">Twoja postać na drugim ekranie: portret, HP/MP, energia, efekty i wyposażenie, a do tego godzina, pogoda i złoto. Niebo zmienia się z porą dnia i roku. Z dolnego ekranu można też korzystać z menu przedmiotów, przez akcje samej gry.</string>
     <string name="fh_dual_hint">Stan drużyny na drugim ekranie: portrety, ciało i umysł, utracone kończyny, stany takie jak głód, strach czy krwawienie oraz wyposażenie. Menu i walka zostają na głównym ekranie.</string>
     <string name="dual_screen_no_display">Drugi ekran jest niedostępny. Ustawienie zostaje zapamiętane; zwykły interfejs nadal działa.</string>
     <string name="dual_screen_badge">Włączony interfejs dwuekranowy</string>
@@ -31,6 +32,13 @@
     <string name="artwork_saved">Grafika zapisana.</string>
     <string name="folder_permission_missing">Brak uprawnienia do odczytu folderu.</string>
     <string name="game_added">Dodano: %1$s</string>
+    <string name="limit_60hz">Ogranicz ekran do 60 Hz (gry RPG Maker działają w 60 FPS; oszczędza baterię na ekranach 90/120 Hz)</string>
+    <string name="cleanup_title">Zwolnić miejsce?</string>
+    <string name="cleanup_message">%1$s zawiera pliki potrzebne tylko do uruchomienia gry na Windows (%2$d: biblioteki NW.js, Chromium i Steam), np. %3$s.\n\nPadPort ich nie używa. Usunięcie zwolni %4$s.\n\nGra z tego folderu przestanie działać na PC, a operacji nie da się cofnąć. Dane gry i zapisy pozostają bez zmian.</string>
+    <string name="cleanup_delete">Usuń (%1$s)</string>
+    <string name="cleanup_keep">Zostaw</string>
+    <string name="cleanup_done">Usunięto pliki: %1$d, zwolniono %2$s</string>
+    <string name="cleanup_failed">Nie udało się usunąć plików: %1$d (%2$s)</string>
     <string name="open_game_error">Nie można otworzyć gry</string>
     <string name="game_details">RPG Maker %1$s  •  osobne zapisy gry</string>
     <string name="play">Graj</string>

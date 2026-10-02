@@ -39,13 +39,13 @@ final class ArtworkStore {
         }
         JSONObject system=new JSONObject(new String(source.read("data/System.json",8*1024*1024),StandardCharsets.UTF_8));
         String key=system.optString("encryptionKey","");
-        Bitmap background=titleLayer(source,"img/titles1/",system.optString("title1Name",""),key,true);
-        Bitmap foreground=titleLayer(source,"img/titles2/",system.optString("title2Name",""),key,false);
-        if(background==null&&foreground==null)return steamFallback(context,source,id);
         JSONObject advanced=system.optJSONObject("advanced");
         int width=advanced==null?816:advanced.optInt("screenWidth",816);
         int height=advanced==null?624:advanced.optInt("screenHeight",624);
         if(width<=0||height<=0){width=816;height=624;}
+        Bitmap background=titleLayer(source,"img/titles1/",system.optString("title1Name",""),key,width,height,true);
+        Bitmap foreground=titleLayer(source,"img/titles2/",system.optString("title2Name",""),key,width,height,false);
+        if(background==null&&foreground==null)return steamFallback(context,source,id);
         double scale=Math.min(1.0,(double)MAX_EDGE/Math.max(width,height));
         width=Math.max(1,(int)Math.round(width*scale));height=Math.max(1,(int)Math.round(height*scale));
         Bitmap composed=Bitmap.createBitmap(width,height,Bitmap.Config.RGB_565);
@@ -82,7 +82,7 @@ final class ArtworkStore {
         save(context,file(context,id,".auto.jpg"),image);
         return image;
     }
-    private static Bitmap titleLayer(GameSource source,String folder,String name,String key,boolean fallback) throws Exception {
+    private static Bitmap titleLayer(GameSource source,String folder,String name,String key,int screenWidth,int screenHeight,boolean fallback) throws Exception {
         List<String> paths=new ArrayList<>();
         if(!name.isEmpty()){
             paths.add(folder+name);
@@ -90,9 +90,16 @@ final class ArtworkStore {
         }
         if(fallback){
             String prefix=(source.prefix+folder).toLowerCase(Locale.ROOT);
+            List<TitleCandidate> candidates=new ArrayList<>();
             source.entries.keySet().stream().filter(p->p.toLowerCase(Locale.ROOT).startsWith(prefix))
                 .filter(p->p.toLowerCase(Locale.ROOT).matches(".*\\.(png_?|rpgmvp|jpg|jpeg|webp)$"))
-                .sorted(String.CASE_INSENSITIVE_ORDER).forEach(p->paths.add(p.substring(source.prefix.length())));
+                .forEach(p->{
+                    String relative=p.substring(source.prefix.length());
+                    int[] size=null;
+                    try{size=RpgImage.pngSize(source.head(relative,48),key);}catch(IOException ignored){/* ranked last */}
+                    candidates.add(new TitleCandidate(relative,size==null?0:size[0],size==null?0:size[1]));
+                });
+            paths.addAll(rankTitles(candidates,screenWidth,screenHeight));
         }
         for(String path:new LinkedHashSet<>(paths)){
             try {
@@ -100,6 +107,25 @@ final class ArtworkStore {
             }catch(IOException|IllegalArgumentException ignored){/* Try another title image; artwork must not block the game. */}
         }
         return null;
+    }
+    record TitleCandidate(String path,int width,int height) {}
+    /**
+     * The game names no title image (plugin-drawn title screens). Its own artwork usually has
+     * the game's screen size; leftover plugin demo layers (often 816x624 or square) and
+     * particles do not. Order: exact screen size, same aspect ratio, other full-size images,
+     * small sprites last; larger area first, then by name.
+     */
+    static List<String> rankTitles(List<TitleCandidate> candidates,int screenWidth,int screenHeight){
+        double aspect=(double)screenWidth/screenHeight;
+        Comparator<TitleCandidate> order=Comparator.<TitleCandidate>comparingInt(c->{
+                if(c.width()==screenWidth&&c.height()==screenHeight)return 0;
+                if(c.width()<=0||c.height()<=0)return 3;   // size unknown (JPEG/WebP or unreadable)
+                if(c.width()*2<screenWidth||c.height()*2<screenHeight)return 4;
+                return Math.abs((double)c.width()/c.height()-aspect)<0.02?1:2;
+            })
+            .thenComparing(Comparator.comparingLong((TitleCandidate c)->(long)c.width()*c.height()).reversed())
+            .thenComparing(TitleCandidate::path,String.CASE_INSENSITIVE_ORDER);
+        return candidates.stream().sorted(order).map(TitleCandidate::path).collect(java.util.stream.Collectors.toList());
     }
     private static Bitmap decode(Context context,byte[] bytes) throws IOException {
         BitmapFactory.Options size=new BitmapFactory.Options();size.inJustDecodeBounds=true;

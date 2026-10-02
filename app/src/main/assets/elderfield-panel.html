@@ -1,0 +1,73 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+@property --sky-top{syntax:'<color>';inherits:true;initial-value:#070b1c}
+@property --sky-bottom{syntax:'<color>';inherits:true;initial-value:#1b2340}
+@property --season{syntax:'<color>';inherits:true;initial-value:rgba(0,0,0,0)}
+@property --dim{syntax:'<number>';inherits:true;initial-value:0}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:#05060c}
+body{margin:0;min-height:100vh;min-height:100svh;color:#efe6d2;font:15px var(--game-font,sans-serif);touch-action:manipulation;
+  transition:--sky-top 6s ease,--sky-bottom 6s ease,--season 6s ease,--dim 3s ease}
+#sky{position:fixed;inset:0;z-index:-2;background:linear-gradient(var(--sky-top),var(--sky-bottom))}
+#sky::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 110%,var(--season),transparent 70%)}
+#sky::after{content:"";position:absolute;inset:0;background:#000;opacity:var(--dim)}
+#weatherLayer{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 3s ease}
+body.rain #weatherLayer,body.storm #weatherLayer{opacity:.55;background:repeating-linear-gradient(105deg,transparent 0 9px,rgba(190,210,235,.35) 9px 10px,transparent 10px 22px);background-size:120px 120px;animation:rain .5s linear infinite}
+body.storm #weatherLayer{opacity:.7;animation:rain .35s linear infinite,flash 9s steps(1) infinite}
+body.snow #weatherLayer{opacity:.8;background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(2px 2px at 80px 70px,#fff,transparent),radial-gradient(3px 3px at 50px 110px,#eef,transparent),radial-gradient(2px 2px at 110px 20px,#fff,transparent);background-size:130px 130px;animation:snow 6s linear infinite}
+@keyframes rain{to{background-position:-30px 120px}}
+@keyframes snow{to{background-position:20px 130px}}
+@keyframes flash{0%,96%,100%{filter:none}97%{filter:brightness(4)}98%{filter:none}99%{filter:brightness(3)}}
+@media (prefers-reduced-motion:reduce){#weatherLayer{animation:none!important}body{transition:none}}
+main{max-width:720px;margin:0 auto;padding:10px 12px 0;display:flex;flex-direction:column;min-height:100vh;min-height:100svh}
+#hud{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;justify-content:space-between;padding:8px 12px;border-radius:8px;background:rgba(8,8,16,.55);font-size:15px}
+#clock{font-size:22px;font-weight:bold;letter-spacing:.5px}
+#date{opacity:.85}#weather{opacity:.85}
+#gold{position:relative;color:#f2cf6b;font-weight:bold}
+.delta{position:absolute;right:0;top:-2px;font-size:13px;pointer-events:none;animation:rise 1.4s ease-out forwards}
+.delta.plus{color:#9be38f}.delta.minus{color:#f08a7a}
+@keyframes rise{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-22px)}}
+#waiting{margin:auto;text-align:center;opacity:.7}
+.party{margin-top:10px}
+.actor{display:grid;grid-template-columns:96px 1fr;gap:4px 12px;padding:10px;border-radius:8px;background:rgba(14,12,20,.72);border:1px solid rgba(220,200,160,.25)}
+.face{grid-row:span 4;width:96px;height:96px;border-radius:6px;overflow:hidden;background:rgba(0,0,0,.35)}
+.face img{display:block;width:100%;height:100%;image-rendering:pixelated}
+.name{font-size:18px;font-weight:bold;display:flex;justify-content:space-between;gap:8px}.level{font-size:14px;opacity:.75;font-weight:normal}
+.gauge{font-size:13px}.bar{height:9px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:2px}
+.bar>i{display:block;height:100%;width:0;border-radius:5px;background:#c8553f;transition:width .5s ease}
+.bar.mp>i{background:#5d86c9}
+.energy{font-size:14px;color:#f1e27a}.energy.changed{animation:pulse .8s ease}
+@keyframes pulse{50%{transform:scale(1.15);color:#fff}}
+.states,.gear{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:#d8ccb4}
+.states:empty,.gear:empty{display:none}
+.chip{display:inline-flex;align-items:center;gap:4px}.chip .icon{width:20px;height:20px}
+.icon{width:24px;height:24px;image-rendering:pixelated;vertical-align:middle;flex-shrink:0}
+button{font:inherit;color:inherit;background:rgba(32,28,40,.85);border:1px solid rgba(220,200,160,.4);border-radius:6px;padding:10px 12px;min-height:44px}
+button:disabled{opacity:.45}button.selected{border-color:#f2cf6b;background:rgba(70,56,30,.9)}
+#inventory{margin-top:10px}
+.slots{font-size:13px;opacity:.85;margin:0 0 6px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.item{display:flex;align-items:center;gap:6px;text-align:left;padding:6px 8px;font-size:14px;min-width:0}
+.item .label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.item .count{color:#f2cf6b}
+.item.changed{animation:pulse .8s ease}
+.item.inert{opacity:.6}
+.description{white-space:pre-wrap;margin:8px 0;padding:10px;border-left:2px solid rgba(242,207,107,.6);background:rgba(8,8,16,.55);border-radius:0 6px 6px 0;font-size:14px}
+#popup{margin-top:10px;padding:10px;border-radius:8px;background:rgba(20,16,28,.9);border:1px solid #f2cf6b}
+#popupTitle{font-weight:bold;margin-bottom:8px}#choices{display:flex;flex-wrap:wrap;gap:6px}
+#actions{position:sticky;bottom:0;display:flex;gap:6px;justify-content:center;padding:8px 0 10px;margin-top:auto;isolation:isolate}
+/* The fade spans the whole screen width, outside the centred column and its padding. */
+#actions::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:linear-gradient(transparent,rgba(5,6,12,.75) 30%);pointer-events:none}
+#actions button{min-width:120px}
+#actions:empty{display:none}
+</style><script src="ui-strings.js"></script></head>
+<body><div id="sky"></div><div id="weatherLayer"></div>
+<main><header id="hud" hidden><span id="clock"></span><span id="date"></span><span id="weather"></span><span id="gold"></span></header>
+<div id="waiting"></div>
+<div id="party" class="party"></div>
+<section id="inventory" hidden><div id="slots" class="slots"></div><nav id="nav"></nav><div id="items" class="rows"></div><div id="description" class="description" hidden></div></section>
+<section id="popup" hidden><div id="popupTitle"></div><div id="choices"></div></section>
+<div id="actions"></div></main>
+<script src="elderfield-panel.js"></script></body></html>

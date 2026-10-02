@@ -72,7 +72,7 @@ class Uinput:
 def main():
     assert SERIAL.startswith("emulator-")
     OUT.mkdir(exist_ok=True)
-    adb("install","-r",str(ROOT/"dist/PadPort-0.5-debug.apk"))
+    adb("install","-r",str(ROOT/"dist/PadPort-0.6-debug.apk"))
     shell("input","keyevent","KEYCODE_WAKEUP")
     shell("wm","dismiss-keyguard")
     shell("am","force-stop","pl.padport.app")

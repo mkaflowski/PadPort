@@ -183,7 +183,9 @@
 
     // Keep browser storage mode: deliberately no global process or nw objects.
     // Look Outside's optional Ash check asks Node for a username even in browser mode.
-    if (typeof window.require === 'undefined') {
+    // Some games treat any require() as NW.js and then read process at load time
+    // (e.g. Cyclone-Steam); GameCompat turns the shim off for them (nodeShim: false).
+    if (config.nodeShim !== false && typeof window.require === 'undefined') {
         window.require = function (module) {
             const name = String(module).replace(/^node:/, '');
             if (name === 'os') return {userInfo: () => ({username: config.playerName || 'Player'})};
@@ -191,6 +193,22 @@
             if (name === 'path') return nodePath;
             throw new Error(text('node_module', module));
         };
+    }
+    // The Android window is already fullscreen. Browser fullscreen requests that do not come
+    // from a tap are rejected (GeckoView: "TypeError: Fullscreen request denied"), and MZ stops
+    // the game on any unhandled rejection - e.g. CGMZ_Core "Start Fullscreen" in Scene_Boot.
+    // Every vendor variant becomes a successful no-op, so F4/options toggles are harmless too.
+    const fullscreenDone = () => Promise.resolve();
+    const fullscreenApi = [
+        [window.Element && Element.prototype, ['requestFullscreen', 'requestFullScreen', 'mozRequestFullScreen', 'webkitRequestFullscreen', 'webkitRequestFullScreen']],
+        [window.Document && Document.prototype, ['exitFullscreen', 'cancelFullScreen', 'mozCancelFullScreen', 'webkitExitFullscreen', 'webkitCancelFullScreen']],
+    ];
+    for (const [owner, names] of fullscreenApi) {
+        if (!owner) continue;
+        for (const name of names) {
+            try { Object.defineProperty(owner, name, {value: fullscreenDone, configurable: true, writable: true}); }
+            catch (e) { log('fullscreen ' + name + ': ' + e.message); }
+        }
     }
     function pause() {
         clearInput();

@@ -118,6 +118,7 @@ final class DualScreenSession implements DisplayManager.DisplayListener,AutoClos
                 @Override public boolean onRenderProcessGone(WebView view,RenderProcessGoneDetail detail){dismiss();return true;}
             });
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            DisplayRate.apply(getWindow(),getDisplay(),DisplayRate.enabled(getContext()));
             web.loadUrl("https://companion.padport.local/"+page+".html");
         }
         void update(String json){latest=json;if(web!=null)web.evaluateJavascript("if(window.GameCompanionPanel)GameCompanionPanel.update("+json+");",null);}

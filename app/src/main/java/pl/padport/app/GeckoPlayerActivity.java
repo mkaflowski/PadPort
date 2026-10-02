@@ -69,6 +69,7 @@ public class GeckoPlayerActivity extends LocalizedActivity {
         root = new FrameLayout(this);
         root.setBackgroundColor(Color.BLACK);
         setContentView(root);
+        DisplayRate.apply(this);
         TextView loading = Ui.text(this, R.string.opening_game, 20, Ui.TEXT);
         loading.setGravity(Gravity.CENTER);
         root.addView(loading, new FrameLayout.LayoutParams(-1, -1));
@@ -341,6 +342,7 @@ public class GeckoPlayerActivity extends LocalizedActivity {
             getString(R.string.import_saves), getString(R.string.diagnostics_copy_log), getString(R.string.back_to_library)};
         LinearLayout settings = Ui.column(this);
         settings.addView(VirtualControllerSettings.checkbox(this, enabled -> refreshVirtualController()));
+        settings.addView(DisplayRate.checkbox(this));
         settings.addView(DualScreenOptions.controls(this, Library.get(this, source.id), () -> {}));
         menu = Ui.menuDialog(this, source.title + " · GeckoView", items, settings, (d, n) -> {
             if (n == 1) startActivity(new Intent(this, ControllerActivity.class));
