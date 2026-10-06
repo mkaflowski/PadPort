@@ -1,6 +1,6 @@
-PADPORT 0.6.0 PREVIEW — RPG MAKER ON ANDROID
+PADPORT 0.6.1 PREVIEW — RPG MAKER ON ANDROID
 
-1. Install PadPort-0.6-debug.apk on your phone, tablet or handheld.
+1. Install PadPort-0.6.1-debug.apk on your phone, tablet or handheld.
    Android 8.0+ and an ARM64 device are required. This APK includes 64-bit engines.
    Install it as an update if PadPort or RPGMPadPort is already installed.
 2. Copy the complete original game folder to your device, for example:
@@ -142,8 +142,8 @@ If it fails to start, open the app menu > "Diagnostics / copy log".
 
 COMPATIBILITY
 
-This preview (version 0.6.0, build 8) supports MV/MZ, with experimental XP/VX/VX Ace
-and dual-screen profiles. Build 8 has been installed on the AYN Thor; individual
+This preview (version 0.6.1, build 9) supports MV/MZ, with experimental XP/VX/VX Ace
+and dual-screen profiles. Build 9 has been installed on the AYN Thor; individual
 games and features still need further compatibility testing. Games requiring
 extra native Node/NW.js modules may need game-specific launcher support.
 RGSS games requiring RTP may have missing graphics or sounds; MIDI and movies

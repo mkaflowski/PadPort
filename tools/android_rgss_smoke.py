@@ -52,7 +52,7 @@ def find_play(title):
 
 def main():
     OUT.mkdir(exist_ok=True)
-    adb("install", "-r", str(ROOT / "dist/PadPort-0.6-debug.apk"), timeout=300)
+    adb("install", "-r", str(ROOT / "dist/PadPort-0.6.1-debug.apk"), timeout=300)
     if "--skip-push" not in sys.argv:
         shell("rm", "-rf", DEST)
         shell("mkdir", "-p", DEST)

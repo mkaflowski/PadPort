@@ -65,7 +65,7 @@ public class MainActivity extends LocalizedActivity {
             GameCard card=new GameCard(this,game,()->launchGame(game,GameEngine.player(this,game)),()->gameOptions(game));
             cards.add(card);root.addView(card);
         }
-        root.addView(Ui.text(this,getString(R.string.library_footer,"0.6"),12,Ui.MUTED));
+        root.addView(Ui.text(this,getString(R.string.library_footer,"0.6.1"),12,Ui.MUTED));
         artworkObserver=root.getViewTreeObserver();artworkObserver.addOnScrollChangedListener(artworkScroll);
         root.addOnLayoutChangeListener((v,l,t,r,b,ol,ot,or,ob)->loadVisibleArtwork());
         root.post(this::loadVisibleArtwork);

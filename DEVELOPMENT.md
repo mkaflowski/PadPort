@@ -6,7 +6,7 @@ Opis dla graczy: [README.md](README.md). Tutaj: architektura, historia zmian, bu
 Androidowy launcher oryginalnych folderów **RPG Maker MV/MZ**, z natywnym
 wejściem gamepada: Bluetooth, USB i kontrolery wbudowane w handheldy.
 
-**APK:** `dist/PadPort-0.6-debug.apk`  
+**APK:** `dist/PadPort-0.6.1-debug.apk`  
 **Instrukcja użytkownika:** `HOW-TO-RUN.txt` / `JAK-URUCHOMIC.txt`
 
 **Dodawanie profili drugiego ekranu:** [DUAL_SCREEN.md](DUAL_SCREEN.md)

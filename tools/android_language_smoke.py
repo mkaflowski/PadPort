@@ -42,7 +42,7 @@ def check_ui(language):
 def main():
     if "--serial" in sys.argv:android_smoke.SERIAL=sys.argv[sys.argv.index("--serial")+1]
     assert android_smoke.SERIAL.startswith("emulator-")
-    adb("install","-r",str(ROOT/"dist/PadPort-0.6-debug.apk"))
+    adb("install","-r",str(ROOT/"dist/PadPort-0.6.1-debug.apk"))
     shell("am","force-stop","pl.padport.app")
     # A preference left by 0.5 must not override the Android language anymore.
     shell("run-as","pl.padport.app","mkdir","-p","shared_prefs")

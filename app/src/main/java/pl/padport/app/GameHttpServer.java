@@ -157,7 +157,7 @@ final class GameHttpServer implements Closeable {
         return r;
     }
 
-    private void head(OutputStream out, int status, String reason, String mime, long length, Map<String, String> extra) throws IOException {
+    private static void head(OutputStream out, int status, String reason, String mime, long length, Map<String, String> extra) throws IOException {
         StringBuilder h = new StringBuilder("HTTP/1.1 ").append(status).append(' ').append(reason).append("\r\n");
         h.append("Content-Type: ").append(mime).append("\r\n");
         if (length >= 0) h.append("Content-Length: ").append(length).append("\r\n");
@@ -174,7 +174,19 @@ final class GameHttpServer implements Closeable {
 
     private void error(OutputStream out, Request r, int status, String reason) throws IOException {
         if (status != 404 || !r.path.contains("favicon")) log.accept(status + " " + r.path);
-        bytes(out, r, "text/plain; charset=utf-8", reason.getBytes(StandardCharsets.UTF_8));
+        writeError(out, r.method, status, reason);
+    }
+
+    /**
+     * The real status matters: MZ decrypts any image with status < 400 (a "200 Not found" body
+     * is shorter than the 16-byte header: "RangeError: attempting to construct out-of-bounds
+     * Uint8Array"), and the read-only fs shim treats HEAD 200 as "file exists" - e.g. Look
+     * Outside's monsterImageExists() then switched the Grinning Beast to a missing pose.
+     */
+    static void writeError(OutputStream out, String method, int status, String reason) throws IOException {
+        byte[] body = reason.getBytes(StandardCharsets.UTF_8);
+        head(out, status, reason, "text/plain; charset=utf-8", body.length, Map.of());
+        if (!"HEAD".equals(method)) out.write(body);
     }
 
     private byte[] asset(String name) throws IOException {

@@ -1,6 +1,6 @@
-PADPORT 0.6.0 PREVIEW — RPG MAKER NA ANDROIDZIE
+PADPORT 0.6.1 PREVIEW — RPG MAKER NA ANDROIDZIE
 
-1. Zainstaluj PadPort-0.6-debug.apk na telefonie, tablecie lub handheldzie.
+1. Zainstaluj PadPort-0.6.1-debug.apk na telefonie, tablecie lub handheldzie.
    Wymagany Android 8.0+ i urządzenie ARM64. Ten APK zawiera silniki 64-bitowe.
 2. Skopiuj CAŁY oryginalny folder gry na urządzenie, np. do
    Download/Gry/Look Outside. Archiwum gry najpierw rozpakuj.
@@ -159,10 +159,10 @@ Nie ma przełącznika języka w aplikacji. Tester kontrolera używa tego samego
 języka co pozostały interfejs. Ta obsługa nie tłumaczy tekstów samej gry.
 APK instaluje się jako aktualizacja wcześniejszego PadPort/RPGMPadPort.
 
-STATUS WERSJI 0.6.0 PREVIEW (BUILD 8)
+STATUS WERSJI 0.6.1 PREVIEW (BUILD 9)
 
 To wersja testowa z obsługą MV/MZ oraz eksperymentalną obsługą XP/VX/VX Ace
-i paneli dwuekranowych. Build 8 został zainstalowany na AYN Thorze.
+i paneli dwuekranowych. Build 9 został zainstalowany na AYN Thorze.
 Zgodność poszczególnych gier i funkcji wymaga dalszych testów.
 
 Gry korzystające z dodatkowych natywnych modułów Node/NW.js mogą wymagać

@@ -59,7 +59,7 @@ nav{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
 #popupTitle{font-weight:bold;margin-bottom:8px}#choices{display:flex;flex-wrap:wrap;gap:6px}
 #actions{position:sticky;bottom:0;display:flex;gap:6px;justify-content:center;padding:8px 0 10px;margin-top:auto;isolation:isolate}
 /* The fade spans the whole screen width, outside the centred column and its padding. */
-#actions::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:linear-gradient(transparent,rgba(5,6,12,.75) 30%);pointer-events:none}
+#actions::before{content:"";position:absolute;z-index:-1;top:-50%;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:linear-gradient(transparent,rgba(5,6,12,.75) 30%);pointer-events:none}
 #actions button{min-width:120px}
 #actions:empty{display:none}
 </style><script src="ui-strings.js"></script></head>
